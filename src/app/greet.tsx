@@ -24,5 +24,6 @@ export default function Greet() {
             <input type="text" className="text-4xl font-bold" value={name} onChange={handleInputChange} />
             <h1 className="text-4xl font-bold">{greeting}</h1>
         </>
+        
     );
 }
