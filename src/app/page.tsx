@@ -1,15 +1,20 @@
 'use client'
 
 import Tabs from "./tab";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api";
+import {Provider,atom, useAtom } from 'jotai'
+import { urlAtom } from "./atom";
+
+
 
 export default function Home() {
   // 定义请求方法
   const [method, setMethod] = useState('GET');
 
   // 定义url
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useAtom(urlAtom);
+  //const [url, setUrl] = useState('');
 
   // 定义response,为一个结构体，包含了success、data、error三个字段
   const [response,setResponse] = useState({success: false, data: '', error: ''})
@@ -25,6 +30,12 @@ export default function Home() {
     // 获取用户输入的值，并更新状态
     setUrl(event.target.value);
   };
+
+  useEffect(() => {
+    if (url) {
+      setUrl(url); // 更新 urlAtom 的值，触发 urlArrayAtom 重新计算
+    }
+  }, [url, setUrl]); // 确保 setUrl 在依赖中
 
   const handleRequest = () => {
     console.log("send request, method:", method, "url:", url);
@@ -94,7 +105,9 @@ export default function Home() {
           <div className="border border-gray-300 p-4">
           <Response response={response} />
           </div>
-
+          <div>
+            { url }
+          </div>
 
         </div>
 

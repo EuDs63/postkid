@@ -1,43 +1,100 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
+import { useAtom } from 'jotai';
+import React, { useState,useEffect } from 'react';
+import { urlAtom } from './atom';
 
-function ParamTable({url}: {url: string}) {
+function ParamTable() {
     const [params, setParams] = useState([{ key: '', value: '', include: true}]);
+    const [url, setUrl] = useAtom(urlAtom);
+    //const [params, setParams] = useAtom(urlArrayAtom);
 
     // 由 url 得到数组
     function parseUrl(url: string) {
-        const search = new URL(url).search;
+        //先判断url是否符合URL
+        if (!url) {
+            return [{ key: '', value: '', include: true }];
+        }
+
+        // 获取查询字符串，但不使用 URL 对象，因为 URL 对象会自动解码参数
+        const search = url.split('?')[1];
+        if (!search) {
+            return [{ key: '', value: '', include: true }];
+        }
         const params = new URLSearchParams(search);
+
+        // const search = new URL(url).search;
+        // const params = new URLSearchParams(search);
         const result = [];
+        // @ts-ignore
         for (const [key, value] of params) {
             result.push({ key, value, include: true });
         }
+        result.push({ key: '', value: '', include: true });
         return result;
     }
 
-    // 初始化时解析 url
+    //初始化时解析 url
     useEffect(() => {
         if (url) {
             setParams(parseUrl(url));
         }
     }, [url]);
 
+    // 由数组拼接参数得到url
+    function buildUrl(params: { key: string, value: string, include: boolean }[]) {
+        // 获取url中的路径,但不使用 URL 对象，因为 URL 对象会自动解码参数
+        const path = url.split('?')[0];
+
+        const includeParams = params.filter(param => param.include);
+
+        if (includeParams.length === 0) {
+            return path;
+        }
+
+        const queryString = includeParams
+            .filter(param => param.key !== '' && param.value !== '') // 仅包含 key 和 value 都不为空的参数
+            .map(param => `${encodeURIComponent(param.key)}=${encodeURIComponent(param.value)}`) // 对键值进行编码
+            .join('&'); // 使用 & 符号连接参数
+
+        return `${path}?${queryString}`;
+
+   }
+
+    // 当 params 变化时更新 url
+    useEffect(() => {
+        setUrl(buildUrl(params));
+    }, [params]);
+
+    // 当 params 变化时更新 url
+    // useEffect(() => {
+    //     const timeout = setTimeout(() => {
+    //         setUrl(buildUrl(params));
+    //     }, 1000); // 延迟 1 秒钟更新状态
+
+    //     return () => clearTimeout(timeout); // 清除上一次的延迟更新
+    // }, [params]);
+
+
     // 处理key变化事件
     const handleKeyChange = (index: number, value: string) => {
         const newParams = [...params];
         newParams[index].key = value;
         // 如果是最后一个参数，并且值不为空，则添加一个新的空参数
-        if (index === params.length - 1 && value !== '') {
+        if (index === params.length - 1) {
             newParams.push({ key: '', value: '', include: false});
         }
-        setParams(newParams);
+        setParams(newParams as typeof params);
     };
 
     // 处理value变化事件
     const handleValueChange = (index: number, value: string) => {
         const newParams = [...params];
         newParams[index].value = value;
+        // 如果是最后一个参数，并且值不为空，则添加一个新的空参数
+        // if (index === params.length - 1 && value !== '') {
+        //     newParams.push({ key: '', value: '', include: false});
+        // }
         setParams(newParams);
     };
 
@@ -47,17 +104,6 @@ function ParamTable({url}: {url: string}) {
         newParams[index].include = !newParams[index].include;
         setParams(newParams);
     };
-
-    // 由数组拼接参数得到查询字符串
-    function buildQueryString(params: { key: string, value: string, include: boolean }[]) {
-        const queryString = params
-            .filter(param => param.include) // 仅包含 include 为 true 的参数
-            .filter(param => param.key !== '' && param.value !== '') // 仅包含 key 和 value 都不为空的参数
-            .map(param => `${encodeURIComponent(param.key)}=${encodeURIComponent(param.value)}`) // 对键值进行编码
-            .join('&'); // 使用 & 符号连接参数
-
-        return '?'+queryString;
-    }
 
     // 由查询字符串得到数组
     // function parseQueryString(queryString: string) {
@@ -109,7 +155,7 @@ function ParamTable({url}: {url: string}) {
                 ))}
             </tbody>
         </table>
-            <div>
+            {/* <div>
                 {params.map((item, index) => (
                     // 仅当 include 为 true 时渲染
                     item.include && (
@@ -117,7 +163,7 @@ function ParamTable({url}: {url: string}) {
                     )
                 ))}
             </div>
-            <div>{buildQueryString(params)}</div>
+            <div>{buildQueryString(params)}</div> */}
 
         </>
     );

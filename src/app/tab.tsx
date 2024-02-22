@@ -19,7 +19,7 @@ function Tabs({ url }: { url: string }) {
             </div>
             <div className="border border-gray-300 p-4">
                 {/* 根据选中的 tab 显示对应的内容 */}
-                {selectedTab === 'Params' && <ParamTable url={url} />}
+                {selectedTab === 'Params' && <ParamTable />}
                 {selectedTab === 'Authorization' && <div>Authorization content</div>}
                 {selectedTab === 'Headers' && <div>Headers content</div>}
                 {selectedTab === 'Body' && <div>Body content</div>}
