@@ -17,12 +17,12 @@ fn greet(name:&str) -> String {
 
 // 发送请求
 #[tauri::command]
-async fn send_request(method: &str, url: &str,headerMap:HashMap<String,String>) -> Result<String, String> {
+async fn send_request(method: &str, url: &str,header_map:HashMap<String,String>) -> Result<String, String> {
     let client = get_client();
     // let client = reqwest::Client::new();
 
     let mut headers = reqwest::header::HeaderMap::new();
-    for (key, value) in headerMap.iter() {
+    for (key, value) in header_map.iter() {
         headers.insert(
             reqwest::header::HeaderName::from_bytes(key.as_bytes()).unwrap(),
             reqwest::header::HeaderValue::from_str(value).unwrap(),
@@ -41,11 +41,11 @@ async fn send_request(method: &str, url: &str,headerMap:HashMap<String,String>) 
         Ok(response) => {
             if response.status().is_success() {
                 match response.text().await {
-                    Ok(body) => Ok(body),
-                    Err(err) => Err(format!("Error reading response body: {}", err)),
+                    Ok(body) => return Ok(body),
+                    Err(err) =>  return Err(format!("Error reading response body: {}", err)),
                 }
             } else {
-                Err(format!("Request failed with status code: {}", response.status()))
+                return Err(format!("Request failed with status code: {}", response.status()))
             }
         }
         Err(err) => Err(format!("Error sending request: {}", err)),

@@ -37,17 +37,21 @@ export default function Home() {
     }
   }, [url, setUrl]); // 确保 setUrl 在依赖中
 
-  // 获取headerMap
+  // 获取header_map
   const headerMap = useAtomValue(headerMapAtom);
 
   const handleRequest = () => {
     console.log("send request, method:", method, "url:", url, "headerMap:", headerMap);
     // 清空response
     setResponse({success: false, data: '', error: ''});
-    invoke<string>('send_request', { method: method, url: url, headerMap})
-      .then(result => setResponse(
-        {success: true, data: result, error: ''}
-      ))
+    
+    // header_map 不行，报错invalid args `header_map` for command `send_request`: command send_request missing required key headerMap
+    invoke<string>('send_request', { method, url, headerMap})
+      .then(result => {
+        setResponse(
+        {success: true, data: result, error: ''});
+        console.log("result:", result);
+      })
       .catch( (error) => {
         setResponse(
           {success: false, data: '', error: error}

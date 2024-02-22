@@ -2,6 +2,11 @@
 
 ## 收获
 - Rust全局变量：[OnceLock in std::sync - Rust](https://doc.rust-lang.org/std/sync/struct.OnceLock.html)
+- `Accept-Encoding`：该字段是
+
+## 踩坑
+### 响应显示乱码
+当我加上header后，请求中文网站就开始出现诸如`zz��}��$�u߿�\������U}`的乱码。逐个排查后发现是`Accept-Encoding`的原因。我开始的时候是照着Postman的设置来写，写成了` { key: 'Accept-Encoding', value: 'gzip, deflate, br', include: true }`，但实际上只有`deflate`是支持的。
 
 ## Getting Started
 

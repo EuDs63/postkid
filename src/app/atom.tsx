@@ -27,8 +27,8 @@ const paramAtom = atom('');
 // 定义headerAtom
 export const headerAtom = atom([
     { key: 'User-Agent', value: 'Mozilla/5.0', include: true },
-    { key: 'Accept', value: 'application/json', include: true },
-    { key: 'Accept-Encoding', value: 'gzip, deflate, br', include: true },
+    { key: 'Accept', value: '*/*', include: true },
+    { key: 'Accept-Encoding', value: 'deflate', include: true },
     { key: 'Content-Type', value: 'application/json', include: true },
     { key: 'Connection', value: 'keep-alive', include: true },
     { key: '', value: '', include: false }
