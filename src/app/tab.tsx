@@ -1,7 +1,8 @@
 'use client'
 import React, { useState } from 'react';
+import ParamTable from './ParamTable';
 
-function Tabs() {
+function Tabs({ url }: { url: string }) {
     const [selectedTab, setSelectedTab] = useState('Params');
 
     const handleTabChange = (tabName: React.SetStateAction<string>) => {
@@ -12,14 +13,14 @@ function Tabs() {
         <div className="p-4">
             <div className="flex mb-4">
                 <TabItem tabName="Params" selectedTab={selectedTab} onClick={handleTabChange} />
-                <TabItem tabName="Authoritarian" selectedTab={selectedTab} onClick={handleTabChange} />
+                <TabItem tabName="Authorization" selectedTab={selectedTab} onClick={handleTabChange} />
                 <TabItem tabName="Headers" selectedTab={selectedTab} onClick={handleTabChange} />
                 <TabItem tabName="Body" selectedTab={selectedTab} onClick={handleTabChange} />
             </div>
             <div className="border border-gray-300 p-4">
                 {/* 根据选中的 tab 显示对应的内容 */}
-                {selectedTab === 'Params' && <div>Params content</div>}
-                {selectedTab === 'Authoritarian' && <div>Authoritarian content</div>}
+                {selectedTab === 'Params' && <ParamTable url={url} />}
+                {selectedTab === 'Authorization' && <div>Authorization content</div>}
                 {selectedTab === 'Headers' && <div>Headers content</div>}
                 {selectedTab === 'Body' && <div>Body content</div>}
             </div>

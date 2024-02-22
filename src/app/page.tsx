@@ -49,16 +49,24 @@ export default function Home() {
 
     if (success) {
       return (
-        <div className="border border-green-500 p-4 rounded-md overflow-y-auto">
-          <div className="text-lg font-bold mb-2">请求成功</div>
+        <div className="border border-green-500 p-4 rounded-md h-auto overflow-y-auto max-h-[calc(100vh-250px)]">
+          <div className="text-lg font-bold mb-2">SUCCESS</div>
           {response.data}
-          <pre>{JSON.stringify(data, null, 2)}</pre>
+          {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
         </div>
       );
-    } else {
+    } else if (error){
       return (
         <div className="border border-red-500 p-4 rounded-md overflow-y-auto">
-          <div className="text-lg font-bold mb-2">请求失败</div>
+          <div className="text-lg font-bold mb-2">ERROR</div>
+          <p>{error}</p>
+        </div>
+      );
+    }
+    else {
+      return (
+        <div className="border border-gray-500 p-4 rounded-md overflow-y-auto">
+          <div className="text-lg font-bold mb-2">Enter the URL and click send to get a response</div>
           <p>{error}</p>
         </div>
       );
@@ -66,7 +74,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex  flex-col items-center justify-between h-screen w-screen">
+    <main className="flex flex-col items-center justify-between h-screen w-screen">
 
         <div className="p-4 rounded-md shadow-md w-screen h-screen">
           <div className="flex flex-row items-center">
@@ -78,10 +86,10 @@ export default function Home() {
               </select>
             </div>
 
-            <input type="text" className="border border-gray-300 p-2 rounded-md mr-4 w-1/2" placeholder="Enter URL" value={url} onChange={handleUrlChange}/>
+            <input type="text" className="border border-gray-300 p-2 rounded-md mr-4 w-3/4" placeholder="Enter URL" value={url} onChange={handleUrlChange}/>
             <button className="bg-blue-500 text-white p-2 rounded-md" onClick={handleRequest}>Send</button>
           </div>
-          <Tabs />
+          <Tabs url={url} />
 
           <div className="border border-gray-300 p-4">
           <Response response={response} />
@@ -89,7 +97,6 @@ export default function Home() {
 
 
         </div>
-      {/* <PostmanInterface /> */}
 
     </main>
   );
