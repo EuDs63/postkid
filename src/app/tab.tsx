@@ -1,8 +1,10 @@
 'use client'
 import React, { useState } from 'react';
 import ParamTable from './ParamTable';
+import Head from 'next/head';
+import HeaderTable from './HeaderTable';
 
-function Tabs({ url }: { url: string }) {
+function Tabs() {
     const [selectedTab, setSelectedTab] = useState('Params');
 
     const handleTabChange = (tabName: React.SetStateAction<string>) => {
@@ -21,7 +23,7 @@ function Tabs({ url }: { url: string }) {
                 {/* 根据选中的 tab 显示对应的内容 */}
                 {selectedTab === 'Params' && <ParamTable />}
                 {selectedTab === 'Authorization' && <div>Authorization content</div>}
-                {selectedTab === 'Headers' && <div>Headers content</div>}
+                {selectedTab === 'Headers' && <HeaderTable />}
                 {selectedTab === 'Body' && <div>Body content</div>}
             </div>
         </div>

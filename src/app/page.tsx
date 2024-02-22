@@ -3,8 +3,8 @@
 import Tabs from "./tab";
 import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api";
-import {Provider,atom, useAtom } from 'jotai'
-import { urlAtom } from "./atom";
+import {Provider,atom, useAtom, useAtomValue } from 'jotai'
+import { headerMapAtom, urlAtom } from "./atom";
 
 
 
@@ -37,9 +37,14 @@ export default function Home() {
     }
   }, [url, setUrl]); // 确保 setUrl 在依赖中
 
+  // 获取headerMap
+  const headerMap = useAtomValue(headerMapAtom);
+
   const handleRequest = () => {
-    console.log("send request, method:", method, "url:", url);
-    invoke<string>('send_request', { method, url })
+    console.log("send request, method:", method, "url:", url, "headerMap:", headerMap);
+    // 清空response
+    setResponse({success: false, data: '', error: ''});
+    invoke<string>('send_request', { method: method, url: url, headerMap})
       .then(result => setResponse(
         {success: true, data: result, error: ''}
       ))
@@ -100,7 +105,7 @@ export default function Home() {
             <input type="text" className="border border-gray-300 p-2 rounded-md mr-4 w-3/4" placeholder="Enter URL" value={url} onChange={handleUrlChange}/>
             <button className="bg-blue-500 text-white p-2 rounded-md" onClick={handleRequest}>Send</button>
           </div>
-          <Tabs url={url} />
+          <Tabs />
 
           <div className="border border-gray-300 p-4">
           <Response response={response} />

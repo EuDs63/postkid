@@ -1,7 +1,7 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use std::sync::OnceLock;
+use std::{collections::HashMap, sync::OnceLock};
 use reqwest;
 
 static CLIENT: OnceLock<reqwest::Client> = OnceLock::new();
@@ -17,11 +17,20 @@ fn greet(name:&str) -> String {
 
 // 发送请求
 #[tauri::command]
-async fn send_request(method: &str, url: &str) -> Result<String, String> {
+async fn send_request(method: &str, url: &str,headerMap:HashMap<String,String>) -> Result<String, String> {
     let client = get_client();
     // let client = reqwest::Client::new();
+
+    let mut headers = reqwest::header::HeaderMap::new();
+    for (key, value) in headerMap.iter() {
+        headers.insert(
+            reqwest::header::HeaderName::from_bytes(key.as_bytes()).unwrap(),
+            reqwest::header::HeaderValue::from_str(value).unwrap(),
+        );
+    }
+
     let res = match method {
-        "GET" => client.get(url).send().await,
+        "GET" => client.get(url).headers(headers).send().await,
         "POST" => client.post(url).send().await,
         "PUT" => client.put(url).send().await,
         "DELETE" => client.delete(url).send().await,

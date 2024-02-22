@@ -2,10 +2,10 @@
 
 import { useAtom } from 'jotai';
 import React, { useState, useEffect } from 'react';
-import { urlAtom } from './atom';
+import { headerAtom } from './atom';
 
 function HeaderTable() {
-    const [params, setParams] = useState([{ key: '', value: '', include: true }]);
+    const [params, setParams] = useAtom(headerAtom);
 
     // 处理key变化事件
     const handleKeyChange = (index: number, value: string) => {
