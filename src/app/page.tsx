@@ -1,36 +1,94 @@
-import Image from "next/image";
-import Greet from "./greet";
-import HttpRequestDropdown from "./dropdown";
-import PostmanInterface from "./PostmanInterface";
+'use client'
+
 import Tabs from "./tab";
+import { useState } from "react";
+import { invoke } from "@tauri-apps/api";
 
 export default function Home() {
+  // 定义请求方法
+  const [method, setMethod] = useState('GET');
+
+  // 定义url
+  const [url, setUrl] = useState('');
+
+  // 定义response,为一个结构体，包含了success、data、error三个字段
+  const [response,setResponse] = useState({success: false, data: '', error: ''})
+
+  // 处理方法变化事件
+  const handleMethodChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    // 获取用户选择的值，并更新状态
+    setMethod(event.target.value);
+  };
+
+  // 处理url变化事件
+  const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // 获取用户输入的值，并更新状态
+    setUrl(event.target.value);
+  };
+
+  const handleRequest = () => {
+    console.log("send request, method:", method, "url:", url);
+    invoke<string>('send_request', { method, url })
+      .then(result => setResponse(
+        {success: true, data: result, error: ''}
+      ))
+      .catch( (error) => {
+        setResponse(
+          {success: false, data: '', error: error}
+        );
+        console.error(error);
+      });
+  }
+
+  const Response = ({ response }: { response: any }) => {
+    if (!response) {
+      return null;
+    }
+
+    const { success, data, error } = response;
+
+    if (success) {
+      return (
+        <div className="border border-green-500 p-4 rounded-md overflow-y-auto">
+          <div className="text-lg font-bold mb-2">请求成功</div>
+          {response.data}
+          <pre>{JSON.stringify(data, null, 2)}</pre>
+        </div>
+      );
+    } else {
+      return (
+        <div className="border border-red-500 p-4 rounded-md overflow-y-auto">
+          <div className="text-lg font-bold mb-2">请求失败</div>
+          <p>{error}</p>
+        </div>
+      );
+    }
+  };
+
   return (
     <main className="flex  flex-col items-center justify-between h-screen w-screen">
 
-      {/* <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-
-      </div> */}
-
-      {/* <HttpRequestDropdown /> */}
-      {/* <Greet /> */}
-      <div className="flex flex-col items-center justify-center h-screen bg-gray-200">
         <div className="p-4 rounded-md shadow-md w-screen h-screen">
-
           <div className="flex flex-row items-center">
-            <HttpRequestDropdown />
-            <input type="text" className="border border-gray-300 p-2 rounded-md mr-4 w-1/2" placeholder="输入 URL 或粘贴文本" />
-            <button className="bg-blue-500 text-white p-2 rounded-md">发送</button>
+            <div>
+              <select className="border border-gray-300 p-2 rounded-md mr-4" value={method} onChange={handleMethodChange}>
+                <option className="text-emerald-400" value="GET">GET</option>
+                <option className="text-red-400" value="POST">POST</option>
+                {/* 添加其他 HTTP 请求方法的选项 */}
+              </select>
+            </div>
+
+            <input type="text" className="border border-gray-300 p-2 rounded-md mr-4 w-1/2" placeholder="Enter URL" value={url} onChange={handleUrlChange}/>
+            <button className="bg-blue-500 text-white p-2 rounded-md" onClick={handleRequest}>Send</button>
           </div>
           <Tabs />
 
+          <div className="border border-gray-300 p-4">
+          <Response response={response} />
+          </div>
+
 
         </div>
-      </div>
       {/* <PostmanInterface /> */}
 
     </main>
