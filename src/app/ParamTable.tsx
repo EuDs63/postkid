@@ -13,13 +13,13 @@ function ParamTable() {
     function parseUrl(url: string) {
         //先判断url是否符合URL
         if (!url) {
-            return [{ key: '', value: '', include: true }];
+            return [{ key: '', value: '', include: false }];
         }
 
         // 获取查询字符串，但不使用 URL 对象，因为 URL 对象会自动解码参数
         const search = url.split('?')[1];
         if (!search) {
-            return [{ key: '', value: '', include: true }];
+            return [{ key: '', value: '', include: false }];
         }
         const params = new URLSearchParams(search);
 
@@ -30,7 +30,7 @@ function ParamTable() {
         for (const [key, value] of params) {
             result.push({ key, value, include: true });
         }
-        result.push({ key: '', value: '', include: true });
+        result.push({ key: '', value: '', include: false });
         return result;
     }
 
@@ -155,15 +155,6 @@ function ParamTable() {
                 ))}
             </tbody>
         </table>
-            {/* <div>
-                {params.map((item, index) => (
-                    // 仅当 include 为 true 时渲染
-                    item.include && (
-                        <div key={index}>{item.key}: {item.value}</div>
-                    )
-                ))}
-            </div>
-            <div>{buildQueryString(params)}</div> */}
 
         </>
     );

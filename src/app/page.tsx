@@ -105,10 +105,6 @@ export default function Home() {
           <div className="border border-gray-300 p-4">
           <Response response={response} />
           </div>
-          <div>
-            { url }
-          </div>
-
         </div>
 
     </main>
