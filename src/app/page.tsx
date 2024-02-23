@@ -40,13 +40,30 @@ export default function Home() {
   // 获取header_map
   const headerMap = useAtomValue(headerMapAtom);
 
+  interface RequestBean {
+    method: string;
+    url: string;
+    header_map: Map<string, string>;
+    body_type: string;
+    body: any;
+    [key: string]: any;
+  }
+
   const handleRequest = () => {
     console.log("send request, method:", method, "url:", url, "headerMap:", headerMap);
     // 清空response
     setResponse({success: false, data: '', error: ''});
+
+    const requestBean: RequestBean = {
+      method: method,
+      url: url,
+      header_map: headerMap,
+      body_type: 'none',
+      body: 'ss'
+    }
     
     // header_map 不行，报错invalid args `header_map` for command `send_request`: command send_request missing required key headerMap
-    invoke<string>('send_request', { method, url, headerMap})
+    invoke<string>('send_request', requestBean)
       .then(result => {
         setResponse(
         {success: true, data: result, error: ''});
