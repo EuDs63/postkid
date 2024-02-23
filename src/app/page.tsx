@@ -4,7 +4,7 @@ import Tabs from "./tab";
 import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api";
 import {Provider,atom, useAtom, useAtomValue } from 'jotai'
-import { headerMapAtom, urlAtom } from "./atom";
+import { bodyAtom, bodyTypeAtom, headerMapAtom, urlAtom } from "./atom";
 
 
 
@@ -40,6 +40,12 @@ export default function Home() {
   // 获取header_map
   const headerMap = useAtomValue(headerMapAtom);
 
+  // 获取body_type
+  const bodyType = useAtomValue(bodyTypeAtom);
+
+  // 获取body
+  const body = useAtomValue(bodyAtom);
+
   interface RequestBean {
     method: string;
     url: string;
@@ -50,7 +56,7 @@ export default function Home() {
   }
 
   const handleRequest = () => {
-    console.log("send request, method:", method, "url:", url, "headerMap:", headerMap);
+    console.log("send request, method:", method, "url:", url, "headerMap:", headerMap, "bodyType:", bodyType);
     // 清空response
     setResponse({success: false, data: '', error: ''});
 
@@ -58,12 +64,12 @@ export default function Home() {
       method: method,
       url: url,
       header_map: headerMap,
-      body_type: 'none',
-      body: 'ss'
+      body_type: bodyType,
+      body: body
     }
     
     // header_map 不行，报错invalid args `header_map` for command `send_request`: command send_request missing required key headerMap
-    invoke<string>('send_request', requestBean)
+    invoke<string>('send_request',{ requestBean })
       .then(result => {
         setResponse(
         {success: true, data: result, error: ''});

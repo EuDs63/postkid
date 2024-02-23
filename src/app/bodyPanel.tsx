@@ -2,9 +2,12 @@
 
 import React, { useState } from 'react';
 import FormTable from './formTable';
+import { bodyTypeAtom } from './atom';
+import { useAtom } from 'jotai';
+import BodyInput from './BodyInput';
 
 function BodyPanel() {
-    const [contentType, setContentType] = useState('none');
+    const [contentType, setContentType] = useAtom(bodyTypeAtom);
 
     const handleContentTypeChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
         setContentType(event.target.value);
@@ -47,7 +50,7 @@ function BodyPanel() {
             <div>
                 {contentType === 'none' && <div className="bg-gray-100 p-4">None Content</div>}
                 {contentType === 'form-data' && <FormTable />}
-                {contentType === 'raw' && <div className="bg-gray-100 p-4">Raw Content</div>}
+                {contentType === 'raw' && <BodyInput />}
             </div>
         </div>
     );

@@ -27,12 +27,12 @@ struct RequestBean {
 
 // 发送请求
 #[tauri::command]
-async fn send_request(requestBean:RequestBean) -> Result<String, String> {
+async fn send_request(request_bean:RequestBean) -> Result<String, String> {
     let client = get_client();
     let mut headers = reqwest::header::HeaderMap::new();
 
     // 设置请求头
-    for (key, value) in requestBean.header_map.iter() {
+    for (key, value) in request_bean.header_map.iter() {
         headers.insert(
             reqwest::header::HeaderName::from_bytes(key.as_bytes()).unwrap(),
             reqwest::header::HeaderValue::from_str(value).unwrap(),
@@ -41,16 +41,16 @@ async fn send_request(requestBean:RequestBean) -> Result<String, String> {
 
     // 发送请求
 
-    let res = match requestBean.method.as_str() {
-        "GET" => client.get(&requestBean.url).headers(headers).send().await,
+    let res = match request_bean.method.as_str() {
+        "GET" => client.get(&request_bean.url).headers(headers).send().await,
         "POST" => {
-            let request_builder = client.post(&requestBean.url).headers(headers);
+            let request_builder = client.post(&request_bean.url).headers(headers);
             // 根据 body 的类型进行不同的处理
-            match requestBean.body_type.as_str() {
+            match request_bean.body_type.as_str() {
                 "none" => request_builder.send().await,
-                "form" => request_builder.form(&requestBean.body).send().await,
+                "form-data" => request_builder.form(&request_bean.body).send().await,
                 "raw" => {
-                            match requestBean.body {
+                            match request_bean.body {
                               Value::String(body_str) => request_builder.body(body_str).send().await,
                               Value::Object(body_obj) => {
                                   let mut request_builder = request_builder;
@@ -68,8 +68,8 @@ async fn send_request(requestBean:RequestBean) -> Result<String, String> {
                 _ => return Err("Unsupported body type".to_string()),
             }
         },
-        "PUT" => client.put(&requestBean.url).send().await,
-        "DELETE" => client.delete(&requestBean.url).send().await,
+        "PUT" => client.put(&request_bean.url).send().await,
+        "DELETE" => client.delete(&request_bean.url).send().await,
         _ => return Err("Method not supported".to_string()),
     };
 
