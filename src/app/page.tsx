@@ -133,6 +133,11 @@ export default function Home() {
     event.target.select(); // 选中输入框中的文本
   };
 
+  const handleFocus = (event) => {
+    event.target.style.height = 'auto';
+    event.target.style.height = `${event.target.scrollHeight}px`;
+  };
+
   return (
     <main className="flex flex-col items-center justify-between h-screen w-screen">
 
@@ -146,14 +151,16 @@ export default function Home() {
               </select>
             </div>
 
-          <input type="text" className="border border-gray-300 p-2 rounded-md mr-4 w-3/4" 
-                 placeholder="Enter URL" value={url} onChange={handleUrlChange} onClick={handleUrlClick}/>
-          {/* <textarea
-            className="border border-gray-300 p-2 rounded-md mr-4 w-3/4 resize-y" // 设置 resize 属性为 "y"
-            placeholder="Enter URL"
+          {/* <input type="text" className="border border-gray-300 p-2 rounded-md mr-4 w-3/4 break-all" 
+                 placeholder="Enter URL" value={url} onChange={handleUrlChange} onClick={handleUrlClick}/> */}
+          <textarea
+            className="border border-gray-300 p-2 rounded-md w-full resize-none focus:outline-none focus:border-blue-500"
             value={url}
+            rows={1}
             onChange={handleUrlChange}
-          /> */}
+            onClick={handleFocus}
+            placeholder="Enter text..."
+          />
             <button className="bg-blue-500 text-white p-2 rounded-md" onClick={handleRequest}>Send</button>
           </div>
           <Tabs />

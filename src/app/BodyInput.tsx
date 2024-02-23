@@ -8,7 +8,7 @@ function BodyInput() {
     const [body, setBody] = useAtom(bodyAtom);
 
     return (
-        <div className="max-w-md mx-auto bg-white rounded shadow-md overflow-hidden md:max-w-2xl">
+        <div className="max-w-md mx-auto bg-white rounded shadow-md overflow-hidden md:max-w-2xl ">
             <Editor
                 value={body}
                 onValueChange={body => setBody(body)}
