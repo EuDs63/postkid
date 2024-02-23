@@ -56,7 +56,7 @@ export default function Home() {
   }
 
   const handleRequest = () => {
-    console.log("send request, method:", method, "url:", url, "headerMap:", headerMap, "bodyType:", bodyType);
+    console.log("send request, method:", method, "url:", url, "headerMap:", headerMap, "bodyType:", bodyType, "body:", body);
     // 清空response
     setResponse({success: false, data: '', error: ''});
 

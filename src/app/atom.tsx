@@ -68,4 +68,4 @@ export const formDataMapAtom = atom((get) => {
 export const bodyTypeAtom = atom('none');
 
 // 定义bodyAtom,类型不确定
-export const bodyAtom = atom({});
+export const bodyAtom = atom(' ');

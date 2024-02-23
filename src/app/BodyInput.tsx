@@ -1,31 +1,44 @@
+import { useState, useEffect } from 'react';
 import { useAtom } from 'jotai';
-import React from 'react';
 import { bodyAtom } from './atom';
-import '../../public/prism.css'
-import Prism from '../../public/prism.js'
+import '../../public/prism.css';
+import Prism from '../../public/prism.js';
 
 function BodyInput() {
     const [body, setBody] = useAtom(bodyAtom);
+    const [editedBody, setEditedBody] = useState(body);
 
-    const handleBodyChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const newBody = event.target.value;
-        setBody(newBody);
+    const handleBodyChange = () => {
+        const preElement = document.getElementById('editableContent');
+        if (preElement) {
+            const newBody = preElement.innerText;
+            setEditedBody(newBody);
+        }
+    };
+
+    useEffect(() => {
+        Prism.highlightAll();
+    }, [editedBody]);
+
+    const handleSave = () => {
+        setBody(editedBody);
     };
 
     return (
         <div>
             <label>Body:</label>
-            <textarea
-                rows={4}
-                cols={50}
-                value={body.toString()} // Fix: Convert body to string
-                onChange={handleBodyChange}
-            ></textarea>
-            <pre className="line-numbers">
-                <code className="language-json" contentEditable="true" onInput={handleBodyChange}>
-                    {body.toString()}
+            <pre
+                id="editableContent"
+                className="line-numbers"
+                contentEditable="true"
+                onInput={handleBodyChange}
+                suppressContentEditableWarning={true} // 隐藏 contentEditable 警告
+            >
+                <code className="language-json">
+                    {editedBody}
                 </code>
             </pre>
+            <button onClick={handleSave}>Save</button>
         </div>
     );
 }
