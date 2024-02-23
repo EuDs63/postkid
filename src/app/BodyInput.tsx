@@ -19,7 +19,7 @@ function BodyInput() {
 
     useEffect(() => {
         Prism.highlightAll(); // 初始化时也进行代码高亮
-    }, []);
+    }, [body]);
 
     const handleBlur = () => {
         setBody(editedBody); // 当用户离开 pre 元素时自动保存内容
