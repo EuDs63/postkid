@@ -27,7 +27,7 @@ export default function Home() {
   };
 
   // 处理url变化事件
-  const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUrlChange = (event) => {
     // 获取用户输入的值，并更新状态
     setUrl(event.target.value);
   };
@@ -128,6 +128,11 @@ export default function Home() {
     }
   };
 
+  // 输入框被点击时，全选输入框中的文本
+  const handleUrlClick = (event) => {
+    event.target.select(); // 选中输入框中的文本
+  };
+
   return (
     <main className="flex flex-col items-center justify-between h-screen w-screen">
 
@@ -141,7 +146,14 @@ export default function Home() {
               </select>
             </div>
 
-            <input type="text" className="border border-gray-300 p-2 rounded-md mr-4 w-3/4" placeholder="Enter URL" value={url} onChange={handleUrlChange}/>
+          <input type="text" className="border border-gray-300 p-2 rounded-md mr-4 w-3/4" 
+                 placeholder="Enter URL" value={url} onChange={handleUrlChange} onClick={handleUrlClick}/>
+          {/* <textarea
+            className="border border-gray-300 p-2 rounded-md mr-4 w-3/4 resize-y" // 设置 resize 属性为 "y"
+            placeholder="Enter URL"
+            value={url}
+            onChange={handleUrlChange}
+          /> */}
             <button className="bg-blue-500 text-white p-2 rounded-md" onClick={handleRequest}>Send</button>
           </div>
           <Tabs />
