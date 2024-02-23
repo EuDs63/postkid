@@ -1,6 +1,8 @@
 import { useAtom } from 'jotai';
-import React, { useState } from 'react';
+import React from 'react';
 import { bodyAtom } from './atom';
+import '../../public/prism.css'
+import Prism from '../../public/prism.js'
 
 function BodyInput() {
     const [body, setBody] = useAtom(bodyAtom);
@@ -19,6 +21,11 @@ function BodyInput() {
                 value={body.toString()} // Fix: Convert body to string
                 onChange={handleBodyChange}
             ></textarea>
+            <pre className="line-numbers">
+                <code className="language-json" contentEditable="true" onInput={handleBodyChange}>
+                    {body.toString()}
+                </code>
+            </pre>
         </div>
     );
 }
