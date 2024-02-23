@@ -28,7 +28,7 @@ const paramAtom = atom('');
 export const headerAtom = atom([
     { key: 'User-Agent', value: 'Mozilla/5.0', include: true },
     { key: 'Accept', value: '*/*', include: true },
-    { key: 'Accept-Encoding', value: 'deflate', include: true },
+    { key: 'Accept-Encoding', value: 'deflate', include: false },
     { key: 'Content-Type', value: 'application/json', include: true },
     { key: 'Connection', value: 'keep-alive', include: true },
     { key: '', value: '', include: false }
@@ -42,6 +42,23 @@ export const headerMapAtom = atom((get) => {
         // 如果 include 为 true，并且 key 和 value 都不为空，则添加到 map 中
         if (header.include && header.key !== '' && header.value !== '') {
             result.set(header.key, header.value);
+        }
+    });
+    return result;
+});
+
+// 定义form-dataAtom
+export const formDataAtom = atom([
+    { key: '', value: '', include: true }
+]);
+
+// 定义formDataMapAtom
+export const formDataMapAtom = atom((get) => {
+    const formData = get(formDataAtom);
+    const result = new Map<string, string>();
+    formData.forEach(data => {
+        if (data.include && data.key !== '' && data.value !== '') {
+            result.set(data.key, data.value);
         }
     });
     return result;

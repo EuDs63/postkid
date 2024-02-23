@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import ParamTable from './ParamTable';
 import Head from 'next/head';
 import HeaderTable from './HeaderTable';
+import BodyPanel from './bodyPanel';
 
 function Tabs() {
     const [selectedTab, setSelectedTab] = useState('Params');
@@ -24,7 +25,7 @@ function Tabs() {
                 {selectedTab === 'Params' && <ParamTable />}
                 {selectedTab === 'Authorization' && <div>Authorization content</div>}
                 {selectedTab === 'Headers' && <HeaderTable />}
-                {selectedTab === 'Body' && <div>Body content</div>}
+                {selectedTab === 'Body' && <BodyPanel />}
             </div>
         </div>
     );
