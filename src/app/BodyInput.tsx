@@ -13,15 +13,16 @@ function BodyInput() {
         if (preElement) {
             const newBody = preElement.innerText;
             setEditedBody(newBody);
+            Prism.highlightAll(); // 更新代码高亮
         }
     };
 
     useEffect(() => {
-        Prism.highlightAll();
-    }, [editedBody]);
+        Prism.highlightAll(); // 初始化时也进行代码高亮
+    }, []);
 
-    const handleSave = () => {
-        setBody(editedBody);
+    const handleBlur = () => {
+        setBody(editedBody); // 当用户离开 pre 元素时自动保存内容
     };
 
     return (
@@ -32,13 +33,13 @@ function BodyInput() {
                 className="line-numbers"
                 contentEditable="true"
                 onInput={handleBodyChange}
-                suppressContentEditableWarning={true} // 隐藏 contentEditable 警告
+                onBlur={handleBlur}
+                suppressContentEditableWarning={true}
             >
                 <code className="language-json">
                     {editedBody}
                 </code>
             </pre>
-            <button onClick={handleSave}>Save</button>
         </div>
     );
 }

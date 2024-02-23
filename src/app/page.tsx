@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api";
 import {Provider,atom, useAtom, useAtomValue } from 'jotai'
 import { bodyAtom, bodyTypeAtom, headerMapAtom, urlAtom } from "./atom";
-
+import '../../public/prism.css';
+import Prism from "../../public/prism";
 
 
 export default function Home() {
@@ -90,11 +91,22 @@ export default function Home() {
 
     const { success, data, error } = response;
 
+    useEffect(() => {
+      if (data) {
+        Prism.highlightAll();
+      }
+    },[data]);
+
     if (success) {
       return (
         <div className="border border-green-500 p-4 rounded-md h-auto overflow-y-auto max-h-[calc(100vh-250px)]">
           <div className="text-lg font-bold mb-2">SUCCESS</div>
-          {response.data}
+          {/* {response.data} */}
+          <pre>
+            <code className="language-json language-html">
+              {response.data}
+            </code>
+          </pre>
           {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
         </div>
       );
