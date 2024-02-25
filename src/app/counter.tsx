@@ -1,11 +1,12 @@
 import { atom, useAtom } from 'jotai'
-import { countAtom, anotherCountAtom, counterAtomFamily } from './atom'
+import { countAtom, anotherCountAtom, counterAtomFamily, tabCounterAtomFamily } from './atom'
 
 
 export default function Counter ({ tabId }) {
     const [count, setCount] = useAtom(countAtom)
     const [anotherCount, setAnotherCount] = useAtom(anotherCountAtom)
     const [count3, setCount3] = useAtom(counterAtomFamily(tabId));
+    const [count4, setCount4] = useAtom(tabCounterAtomFamily(tabId));
 
     return (
         <>
@@ -24,6 +25,12 @@ export default function Counter ({ tabId }) {
             <div>
                 <span>count3: {count3.count}</span>
                 <button type="button" onClick={() => setCount3((c) => ({ count: c.count + 1 }))}>
+                    increment
+                </button>
+            </div>
+            <div>
+                <span>count4: {count4}</span>
+                <button type="button" onClick={() => setCount4((c) => c + 1)}>
                     increment
                 </button>
             </div>

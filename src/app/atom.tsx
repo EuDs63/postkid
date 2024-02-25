@@ -58,3 +58,8 @@ export const counterAtomFamily = atomFamily((tabId) => {
         count: 0,
     });
 });
+
+export // 创建一个 atomFamily，每个标签页对应一个原子
+    const tabCounterAtomFamily = atomFamily((id) => {
+        return atom(0); // 每个标签页都有一个计数器，初始为 0
+    });

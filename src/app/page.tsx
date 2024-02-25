@@ -1,81 +1,27 @@
 'use client'
-import React, { useState } from 'react';
-import Home from './work/page';
-import { ScopeProvider } from 'jotai-scope';
-import { anotherCountAtom, countAtom, counterAtomFamily } from './atom';
+import { SetStateAction, useState } from 'react';
 import Counter from './counter';
 
-function TabComponent() {
-    const [activeTab, setActiveTab] = useState(0); // 用于跟踪当前活动的标签页
+function App() {
+    const [currentTab, setCurrentTab] = useState(1); // 当前标签页
 
-    const handleTabClick = (index) => {
-        setActiveTab(index);
+    const changeTab = (tabId: SetStateAction<number>) => {
+        setCurrentTab(tabId);
     };
-
-    const tabs = [
-        {
-            title: 'Tab 6', content: () => {
-                return (
-                    <>
-                        <div> Tab 6</div>
-                        <ScopeProvider atoms={[anotherCountAtom,counterAtomFamily]}>
-                            <Counter tabId={1}/>
-                        </ScopeProvider>
-                    </>
-                );
-            }
-
-        },
-        {
-            title: 'Tab 7', content: () => {
-                return (
-                    <ScopeProvider atoms={[anotherCountAtom,counterAtomFamily]}>
-                        <Counter tabId={2} />
-                    </ScopeProvider>
-                );
-            }
-        }
-    ];
 
     return (
         <div>
-            <div className="flex">
-                {/* 渲染标签页标题 */}
-                {tabs.map((tab, index) => (
-                    <div
-                        key={index}
-                        className={`p-2 cursor-pointer ${activeTab === index ? 'bg-gray-200' : ''}`}
-                        onClick={() => handleTabClick(index)}
-                    >
-                        {tab.title}
-                    </div>
-                ))}
-            </div>
-            <div>
-                {activeTab === 0 && 
-                    (
-                        <>
-                            <div> Tab 6</div>
-                            <ScopeProvider atoms={[anotherCountAtom]}>
-                                <Counter />
-                            </ScopeProvider>
-                        </>
-                    ) 
-                }
-                {activeTab === 1 && 
-                    (
-                    <>
-                        <div> Tab 7</div>
-                        <ScopeProvider atoms={[anotherCountAtom]}>
-                            <Counter />
-                        </ScopeProvider>
-                    </>
-                    )
-                }
-            </div>
+            <button onClick={() => changeTab(1)}>Tab 1</button>
+            <button onClick={() => changeTab(2)}>Tab 2</button>
+
+            {/* 在不同的标签页下分别显示对应的组件 */}
+            {/* {currentTab === 1 && <Tab tabId={1} />}
+            {currentTab === 2 && <Tab tabId={2} />} */}
+            { currentTab === 1 && <Counter tabId={1} />}
+            { currentTab === 2 && <Counter tabId={2} />}
         </div>
     );
 }
 
-export default TabComponent;
+export default App;
 
