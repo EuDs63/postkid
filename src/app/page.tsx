@@ -1,7 +1,9 @@
 'use client'
-
 import React, { useState } from 'react';
 import Home from './work/page';
+import { ScopeProvider } from 'jotai-scope';
+import { anotherCountAtom, countAtom } from './atom';
+import Counter from './counter';
 
 function TabComponent() {
     const [activeTab, setActiveTab] = useState(0); // 用于跟踪当前活动的标签页
@@ -11,8 +13,28 @@ function TabComponent() {
     };
 
     const tabs = [
-        { title: 'Tab 4', content: () => <Home /> }, // 使用函数返回组件
-        { title: 'Tab 5', content: () => <Home /> }, // 使用函数返回组件
+        {
+            title: 'Tab 6', content: () => {
+                return (
+                    <>
+                        <div> Tab 6</div>
+                        <ScopeProvider atoms={[anotherCountAtom]}>
+                            <Counter />
+                        </ScopeProvider>
+                    </>
+                );
+            }
+
+        },
+        {
+            title: 'Tab 7', content: () => {
+                return (
+                    <ScopeProvider atoms={[anotherCountAtom]}>
+                        <Counter />
+                    </ScopeProvider>
+                );
+            }
+        }
     ];
 
     return (
@@ -38,3 +60,4 @@ function TabComponent() {
 }
 
 export default TabComponent;
+

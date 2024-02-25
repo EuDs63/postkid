@@ -48,3 +48,6 @@ export const bodyTypeAtom = atom('none');
 
 // 定义bodyAtom,类型不确定
 export const bodyAtom = atom(' ');
+
+export const countAtom = atom(0)
+export const anotherCountAtom = atom(0)
