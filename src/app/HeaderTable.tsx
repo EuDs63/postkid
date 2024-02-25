@@ -4,7 +4,7 @@ import { useAtom } from 'jotai';
 import React, {  } from 'react';
 import { headerAtomFamily } from './atom';
 
-function HeaderTable({tabId}) {
+function HeaderTable({ tabId }: { tabId: number }) {
     //const [params, setParams] = useAtom(headerAtom);
     const [params, setParams] = useAtom(headerAtomFamily(tabId));
 

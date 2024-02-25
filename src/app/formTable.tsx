@@ -1,7 +1,7 @@
 'use client'
 
 import { useAtom } from 'jotai';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { formDataAtom } from './atom';
 
 function FormTable() {

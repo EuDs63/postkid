@@ -1,20 +1,15 @@
 'use client'
-// App.js
-import { useState } from 'react';
-import Counter from './counter';
+import { SetStateAction, useState } from 'react';
+//import Counter from './counter';
 import Work from './work/page';
 
 function App() {
     const [currentTab, setCurrentTab] = useState(1); // 当前标签页
 
-    const changeTab = (tabId) => {
-        setCurrentTab(tabId);
-    };
-
     const [tabs, setTabs] = useState([
         { id: 1, name: 'Tab 1' },
         { id: 2, name: 'Tab 2' }
-    ]); // Declare the tabs state and the setTabs function
+    ]); 
 
     const addTab = () => {
         const nextId = tabs.length + 1;
@@ -24,7 +19,7 @@ function App() {
     const tabButtons = tabs.map((tab) => (
         <button
             key={tab.id}
-            onClick={() => changeTab(tab.id)}
+            onClick={() => setCurrentTab(tab.id)}
             className={`block py-2 px-4 rounded-md mb-2 ${currentTab === tab.id ? 'bg-blue-500 text-white' : 'bg-gray-300'
                 }`}
         >
@@ -40,7 +35,7 @@ function App() {
     ));
 
     return (
-        <div className="container mx-auto mt-8 px-4 flex">
+        <div className="container mx-auto mt-4 px-2 flex">
             <div className="mr-4">
                 {tabButtons}
                 <button

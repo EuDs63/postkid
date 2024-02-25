@@ -4,12 +4,12 @@ import Tabs from "../tab";
 import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api";
 import { useAtom, useAtomValue } from 'jotai'
-import { bodyAtom, bodyAtomFamily, bodyTypeAtom, bodyTypeAtomFamily, headerMapAtom, headerMapAtomFamily, urlAtomFamily } from "../atom";
+import { bodyAtomFamily, bodyTypeAtomFamily, headerMapAtomFamily, urlAtomFamily } from "../atom";
 import '../../../public/prism.css';
 import Prism from "../../../public/prism";
 
 
-export default function Work({ tabId }) {
+export default function Work({ tabId }: { tabId: number }) {
   // 定义请求方法
   const [method, setMethod] = useState('GET');
 
@@ -29,7 +29,7 @@ export default function Work({ tabId }) {
   };
 
   // 处理url变化事件
-  const handleUrlChange = (event) => {
+  const handleUrlChange = (event: { target: { value: string | ((prev: string) => string); }; }) => {
     // 获取用户输入的值，并更新状态
     setUrl(event.target.value);
   };
@@ -157,7 +157,7 @@ export default function Work({ tabId }) {
           {/* <input type="text" className="border border-gray-300 p-2 rounded-md mr-4 w-3/4 break-all" 
                  placeholder="Enter URL" value={url} onChange={handleUrlChange} onClick={handleUrlClick}/> */}
           <textarea
-            className="border border-gray-300 p-2 rounded-md w-full resize-none focus:outline-none focus:border-blue-500"
+            className="p-2 rounded-md mr-2 w-7/12 resize-none focus:outline focus:border-blue-500"
             value={url}
             rows={1}
             onChange={handleUrlChange}
@@ -166,11 +166,9 @@ export default function Work({ tabId }) {
           />
             <button className="bg-blue-500 text-white p-2 rounded-md" onClick={handleRequest}>Send</button>
           </div>
-          <Tabs />
+          <Tabs tabId={tabId} />
 
-          <div className="border border-gray-300 p-4">
           <Response response={response} />
-          </div>
         </div>
 
     </main>

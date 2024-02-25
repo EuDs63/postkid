@@ -4,7 +4,7 @@ import { useAtom } from 'jotai';
 import React, { useState,useEffect } from 'react';
 import { urlAtomFamily } from './atom';
 
-function ParamTable({tabId}) {
+function ParamTable({ tabId }: { tabId: number }) {
     const [params, setParams] = useState([{ key: '', value: '', include: true}]);
     //const [url, setUrl] = useAtom(urlAtom);
     const [url,setUrl] = useAtom(urlAtomFamily(tabId));

@@ -1,11 +1,10 @@
 'use client'
 import React, { useState } from 'react';
 import ParamTable from './ParamTable';
-import Head from 'next/head';
 import HeaderTable from './HeaderTable';
 import BodyPanel from './bodyPanel';
 
-function Tabs( {tabId} ) {
+function Tabs({ tabId }: { tabId: number }) {
     const [selectedTab, setSelectedTab] = useState('Params');
 
     const handleTabChange = (tabName: React.SetStateAction<string>) => {
@@ -13,7 +12,7 @@ function Tabs( {tabId} ) {
     };
 
     return (
-        <div className="p-4">
+        <div className="py-2 border-gray-500">
             <div className="flex mb-4">
                 <TabItem tabName="Params" selectedTab={selectedTab} onClick={handleTabChange} />
                 {/* <TabItem tabName="Authorization" selectedTab={selectedTab} onClick={handleTabChange} /> */}

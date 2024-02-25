@@ -2,7 +2,7 @@ import { useAtom } from 'jotai'
 import { countAtom, anotherCountAtom, counterAtomFamily, tabCounterAtomFamily } from './atom'
 
 
-export default function Counter ({ tabId }) {
+export default function Counter({ tabId }: { tabId: number }) {
     const [count, setCount] = useAtom(countAtom)
     const [anotherCount, setAnotherCount] = useAtom(anotherCountAtom)
     const [count3, setCount3] = useAtom(counterAtomFamily(tabId));

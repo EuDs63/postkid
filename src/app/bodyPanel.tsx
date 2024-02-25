@@ -1,12 +1,12 @@
 'use client'
 
-import React, { useState } from 'react';
+import React from 'react';
 import FormTable from './formTable';
-import { bodyTypeAtom, bodyTypeAtomFamily } from './atom';
+import { bodyTypeAtomFamily } from './atom';
 import { useAtom } from 'jotai';
 import BodyInput from './BodyInput';
 
-function BodyPanel( {tabId} ) {
+function BodyPanel({ tabId }: { tabId: number }) {
     //const [contentType, setContentType] = useAtom(bodyTypeAtom);
 
     const [contentType, setContentType] = useAtom(bodyTypeAtomFamily(tabId));
