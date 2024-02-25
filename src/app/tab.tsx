@@ -5,7 +5,7 @@ import Head from 'next/head';
 import HeaderTable from './HeaderTable';
 import BodyPanel from './bodyPanel';
 
-function Tabs() {
+function Tabs( {tabId} ) {
     const [selectedTab, setSelectedTab] = useState('Params');
 
     const handleTabChange = (tabName: React.SetStateAction<string>) => {
@@ -22,10 +22,10 @@ function Tabs() {
             </div>
             <div className="border border-gray-300 p-4">
                 {/* 根据选中的 tab 显示对应的内容 */}
-                {selectedTab === 'Params' && <ParamTable />}
+                {selectedTab === 'Params' && <ParamTable tabId = {tabId}/>}
                 {/* {selectedTab === 'Authorization' && <div>Authorization content</div>} */}
-                {selectedTab === 'Headers' && <HeaderTable />}
-                {selectedTab === 'Body' && <BodyPanel />}
+                {selectedTab === 'Headers' && <HeaderTable tabId={tabId} />}
+                {selectedTab === 'Body' && <BodyPanel tabId={tabId}  />}
             </div>
         </div>
     );

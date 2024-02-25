@@ -4,17 +4,19 @@ import Tabs from "../tab";
 import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api";
 import { useAtom, useAtomValue } from 'jotai'
-import { bodyAtom, bodyTypeAtom, headerMapAtom, urlAtom } from "../atom";
+import { bodyAtom, bodyAtomFamily, bodyTypeAtom, bodyTypeAtomFamily, headerMapAtom, headerMapAtomFamily, urlAtomFamily } from "../atom";
 import '../../../public/prism.css';
 import Prism from "../../../public/prism";
 
 
-export default function Home() {
+export default function Work({ tabId }) {
   // 定义请求方法
   const [method, setMethod] = useState('GET');
 
   // 定义url
-  const [url, setUrl] = useAtom(urlAtom);
+  //const [url, setUrl] = useAtom(urlAtom);
+  const [url, setUrl] = useAtom(urlAtomFamily(tabId));
+
   //const [url, setUrl] = useState('');
 
   // 定义response,为一个结构体，包含了success、data、error三个字段
@@ -39,13 +41,19 @@ export default function Home() {
   }, [url, setUrl]); // 确保 setUrl 在依赖中
 
   // 获取header_map
-  const headerMap = useAtomValue(headerMapAtom);
+  //const headerMap = useAtomValue(headerMapAtom);
+
+  const headerMap = useAtomValue(headerMapAtomFamily(tabId));
 
   // 获取body_type
-  const bodyType = useAtomValue(bodyTypeAtom);
+  //const bodyType = useAtomValue(bodyTypeAtom);
+
+  const bodyType = useAtomValue(bodyTypeAtomFamily(tabId));
 
   // 获取body
-  const body = useAtomValue(bodyAtom);
+  //const body = useAtomValue(bodyAtom);
+
+  const body = useAtomValue(bodyAtomFamily(tabId));
 
   interface RequestBean {
     method: string;

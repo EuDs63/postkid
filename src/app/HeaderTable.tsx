@@ -1,11 +1,12 @@
 'use client'
 
 import { useAtom } from 'jotai';
-import React, { useState, useEffect } from 'react';
-import { headerAtom } from './atom';
+import React, {  } from 'react';
+import { headerAtomFamily } from './atom';
 
-function HeaderTable() {
-    const [params, setParams] = useAtom(headerAtom);
+function HeaderTable({tabId}) {
+    //const [params, setParams] = useAtom(headerAtom);
+    const [params, setParams] = useAtom(headerAtomFamily(tabId));
 
     // 处理key变化事件
     const handleKeyChange = (index: number, value: string) => {

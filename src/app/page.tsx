@@ -2,6 +2,7 @@
 // App.js
 import { useState } from 'react';
 import Counter from './counter';
+import Work from './work/page';
 
 function App() {
     const [currentTab, setCurrentTab] = useState(1); // 当前标签页
@@ -34,6 +35,7 @@ function App() {
     const tabContent = tabs.map((tab) => (
         <div key={tab.id} className={`${currentTab === tab.id ? 'block' : 'hidden'}`}>
             {/* <Counter tabId={tab.id} /> */}
+            < Work tabId={tab.id} />
         </div>
     ));
 

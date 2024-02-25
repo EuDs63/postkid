@@ -2,12 +2,14 @@
 
 import React, { useState } from 'react';
 import FormTable from './formTable';
-import { bodyTypeAtom } from './atom';
+import { bodyTypeAtom, bodyTypeAtomFamily } from './atom';
 import { useAtom } from 'jotai';
 import BodyInput from './BodyInput';
 
-function BodyPanel() {
-    const [contentType, setContentType] = useAtom(bodyTypeAtom);
+function BodyPanel( {tabId} ) {
+    //const [contentType, setContentType] = useAtom(bodyTypeAtom);
+
+    const [contentType, setContentType] = useAtom(bodyTypeAtomFamily(tabId));
 
     const handleContentTypeChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
         setContentType(event.target.value);

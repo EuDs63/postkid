@@ -2,11 +2,12 @@
 
 import { useAtom } from 'jotai';
 import React, { useState,useEffect } from 'react';
-import { urlAtom } from './atom';
+import { urlAtomFamily } from './atom';
 
-function ParamTable() {
+function ParamTable({tabId}) {
     const [params, setParams] = useState([{ key: '', value: '', include: true}]);
-    const [url, setUrl] = useAtom(urlAtom);
+    //const [url, setUrl] = useAtom(urlAtom);
+    const [url,setUrl] = useAtom(urlAtomFamily(tabId));
     //const [params, setParams] = useAtom(urlArrayAtom);
 
     // 由 url 得到数组
