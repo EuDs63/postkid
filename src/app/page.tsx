@@ -1,24 +1,56 @@
 'use client'
-import { SetStateAction, useState } from 'react';
+// App.js
+import { useState } from 'react';
 import Counter from './counter';
 
 function App() {
     const [currentTab, setCurrentTab] = useState(1); // 当前标签页
 
-    const changeTab = (tabId: SetStateAction<number>) => {
+    const changeTab = (tabId) => {
         setCurrentTab(tabId);
     };
 
-    return (
-        <div>
-            <button onClick={() => changeTab(1)}>Tab 1</button>
-            <button onClick={() => changeTab(2)}>Tab 2</button>
+    const [tabs, setTabs] = useState([
+        { id: 1, name: 'Tab 1' },
+        { id: 2, name: 'Tab 2' }
+    ]); // Declare the tabs state and the setTabs function
 
-            {/* 在不同的标签页下分别显示对应的组件 */}
-            {/* {currentTab === 1 && <Tab tabId={1} />}
-            {currentTab === 2 && <Tab tabId={2} />} */}
-            { currentTab === 1 && <Counter tabId={1} />}
-            { currentTab === 2 && <Counter tabId={2} />}
+    const addTab = () => {
+        const nextId = tabs.length + 1;
+        setTabs([...tabs, { id: nextId, name: `Tab ${nextId}` }]);
+    }
+
+    const tabButtons = tabs.map((tab) => (
+        <button
+            key={tab.id}
+            onClick={() => changeTab(tab.id)}
+            className={`block py-2 px-4 rounded-md mb-2 ${currentTab === tab.id ? 'bg-blue-500 text-white' : 'bg-gray-300'
+                }`}
+        >
+            {tab.name}
+        </button>
+    ));
+
+    const tabContent = tabs.map((tab) => (
+        <div key={tab.id} className={`${currentTab === tab.id ? 'block' : 'hidden'}`}>
+            <Counter tabId={tab.id} />
+        </div>
+    ));
+
+    return (
+        <div className="container mx-auto mt-8 px-4 flex">
+            <div className="mr-4">
+                {tabButtons}
+                <button
+                    onClick={addTab}
+                    className="py-2 px-4 rounded-md bg-green-500 text-white mt-4"
+                >
+                    Add Tab
+                </button>
+            </div>
+            <div>
+                {tabContent}
+            </div>
         </div>
     );
 }
