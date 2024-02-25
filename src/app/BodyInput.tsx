@@ -1,17 +1,19 @@
 import { useAtom } from 'jotai';
-import { bodyAtom } from './atom';
+import { bodyAtomFamily } from './atom';
 import Editor from 'react-simple-code-editor'
 import '../../public/prism.css';
 import Prism from '../../public/prism.js';
 
-function BodyInput() {
-    const [body, setBody] = useAtom(bodyAtom);
+function BodyInput({ tabId }: { tabId: number }) {
+    //const [body, setBody] = useAtom(bodyAtom);
+    const [body, setBody] = useAtom(bodyAtomFamily(tabId));
 
     return (
-        <div className="max-w-md mx-auto bg-white rounded shadow-md overflow-hidden md:max-w-2xl ">
+        <div className="bg-white rounded shadow-md overflow-hidden">
             <Editor
                 value={body}
                 onValueChange={body => setBody(body)}
+                // @ts-ignore
                 highlight={body => Prism.highlight(body, Prism.languages.json)} // This line reports an error but works normally
                 padding={10}
                 className="text-base"

@@ -2,10 +2,10 @@
 
 import { useAtom } from 'jotai';
 import React from 'react';
-import { formDataAtom } from './atom';
+import { formDataAtomFamily } from './atom';
 
-function FormTable() {
-    const [params, setParams] = useAtom(formDataAtom);
+function FormTable(tabId:{tabId:number}) {
+    const [params, setParams] = useAtom(formDataAtomFamily(tabId));
 
     // 处理key变化事件
     const handleKeyChange = (index: number, value: string) => {
@@ -34,7 +34,7 @@ function FormTable() {
 
     return (
         <>
-            <table className="w-full table-auto">
+            <table className="table-auto">
                 <thead>
                     <tr className="bg-gray-200">
                         <th className="px-4 py-2"></th>
@@ -55,7 +55,7 @@ function FormTable() {
                             <td className="px-4 py-2">
                                 <input
                                     type="text"
-                                    className="border border-gray-300 rounded px-2 py-1"
+                                    className="border border-gray-500 rounded px-2 py-1"
                                     value={item.key}
                                     onChange={(e) => handleKeyChange(index, e.target.value)}
                                 />
@@ -63,7 +63,7 @@ function FormTable() {
                             <td className="px-4 py-2">
                                 <input
                                     type="text"
-                                    className="border border-gray-300 rounded px-2 py-1"
+                                    className="border border-gray-500 rounded px-2 py-1"
                                     value={item.value}
                                     onChange={(e) => handleValueChange(index, e.target.value)}
                                 />

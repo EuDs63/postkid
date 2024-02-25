@@ -16,7 +16,7 @@ function BodyPanel({ tabId }: { tabId: number }) {
     };
 
     return (
-        <div className="container mx-auto px-4 ">
+        <div className="container mx-auto px-4 w-full">
             <div className="flex items-center mb-4">
                 <input
                     type="radio"
@@ -49,10 +49,10 @@ function BodyPanel({ tabId }: { tabId: number }) {
                 <label htmlFor="raw">Raw</label>
             </div>
 
-            <div>
-                {contentType === 'none' && <div className="bg-gray-100 p-4">None Content</div>}
-                {contentType === 'form-data' && <FormTable />}
-                {contentType === 'raw' && <BodyInput />}
+            <div className="container">
+                {contentType === 'none' && <div className="bg-gray-100 p-4 flex-grow">None Content</div>}
+                {contentType === 'form-data' && <FormTable tabId = {tabId} />}
+                {contentType === 'raw' && <BodyInput tabId = {tabId} />}
             </div>
         </div>
     );

@@ -136,15 +136,16 @@ export default function Work({ tabId }: { tabId: number }) {
     }
   };
 
+  // @ts-ignore
   const handleFocus = (event) => {
     event.target.style.height = 'auto';
     event.target.style.height = `${event.target.scrollHeight}px`;
   };
 
   return (
-    <main className="flex flex-col items-center justify-between h-screen w-screen">
+    <main className="flex flex-col items-center justify-between w-full">
 
-        <div className="p-4 rounded-md shadow-md w-screen h-screen">
+        <div className="p-4 rounded-md shadow-md w-full h-full">
           <div className="flex flex-row items-center">
             <div>
               <select className="border border-gray-300 p-2 rounded-md mr-4" value={method} onChange={handleMethodChange}>
@@ -157,7 +158,7 @@ export default function Work({ tabId }: { tabId: number }) {
           {/* <input type="text" className="border border-gray-300 p-2 rounded-md mr-4 w-3/4 break-all" 
                  placeholder="Enter URL" value={url} onChange={handleUrlChange} onClick={handleUrlClick}/> */}
           <textarea
-            className="p-2 rounded-md mr-2 w-7/12 resize-none focus:outline focus:border-blue-500"
+            className="p-2 rounded-md mr-2 resize-none flex-grow focus:outline focus:border-blue-500"
             value={url}
             rows={1}
             onChange={handleUrlChange}

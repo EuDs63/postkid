@@ -1,14 +1,16 @@
 'use client'
 
 import { useAtom } from 'jotai';
-import React, { useState,useEffect } from 'react';
-import { urlAtomFamily } from './atom';
+import React, { useEffect } from 'react';
+import { paramAtomFamily, urlAtomFamily } from './atom';
 
 function ParamTable({ tabId }: { tabId: number }) {
-    const [params, setParams] = useState([{ key: '', value: '', include: true}]);
+    //const [params, setParams] = useState([{ key: '', value: '', include: true}]);
+
+    const [params, setParams] = useAtom(paramAtomFamily(tabId));
+
     //const [url, setUrl] = useAtom(urlAtom);
     const [url,setUrl] = useAtom(urlAtomFamily(tabId));
-    //const [params, setParams] = useAtom(urlArrayAtom);
 
     // 由 url 得到数组
     function parseUrl(url: string) {
@@ -17,15 +19,17 @@ function ParamTable({ tabId }: { tabId: number }) {
             return [{ key: '', value: '', include: false }];
         }
 
-        // 获取查询字符串，但不使用 URL 对象，因为 URL 对象会自动解码参数
+        // 获取查询字符串
         const search = url.split('?')[1];
         if (!search) {
             return [{ key: '', value: '', include: false }];
         }
         const params = new URLSearchParams(search);
 
+        // 不使用 URL 对象，因为 URL 对象会自动解码参数
         // const search = new URL(url).search;
         // const params = new URLSearchParams(search);
+
         const result = [];
         // @ts-ignore
         for (const [key, value] of params) {
@@ -67,16 +71,6 @@ function ParamTable({ tabId }: { tabId: number }) {
         setUrl(buildUrl(params));
     }, [params]);
 
-    // 当 params 变化时更新 url
-    // useEffect(() => {
-    //     const timeout = setTimeout(() => {
-    //         setUrl(buildUrl(params));
-    //     }, 1000); // 延迟 1 秒钟更新状态
-
-    //     return () => clearTimeout(timeout); // 清除上一次的延迟更新
-    // }, [params]);
-
-
     // 处理key变化事件
     const handleKeyChange = (index: number, value: string) => {
         const newParams = [...params];
@@ -92,10 +86,6 @@ function ParamTable({ tabId }: { tabId: number }) {
     const handleValueChange = (index: number, value: string) => {
         const newParams = [...params];
         newParams[index].value = value;
-        // 如果是最后一个参数，并且值不为空，则添加一个新的空参数
-        // if (index === params.length - 1 && value !== '') {
-        //     newParams.push({ key: '', value: '', include: false});
-        // }
         setParams(newParams);
     };
 
@@ -105,16 +95,6 @@ function ParamTable({ tabId }: { tabId: number }) {
         newParams[index].include = !newParams[index].include;
         setParams(newParams);
     };
-
-    // 由查询字符串得到数组
-    // function parseQueryString(queryString: string) {
-    //     const params = new URLSearchParams(queryString);
-    //     const result = [];
-    //     for (const [key, value] of params) {
-    //         result.push({ key, value, include: true });
-    //     }
-    //     return result;
-    // }
 
     return (
         <>

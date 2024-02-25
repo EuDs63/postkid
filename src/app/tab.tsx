@@ -19,7 +19,7 @@ function Tabs({ tabId }: { tabId: number }) {
                 <TabItem tabName="Headers" selectedTab={selectedTab} onClick={handleTabChange} />
                 <TabItem tabName="Body" selectedTab={selectedTab} onClick={handleTabChange} />
             </div>
-            <div className="border border-gray-300 p-4">
+            <div className="border border-gray-500 rounded-md p-4 mb-2">
                 {/* 根据选中的 tab 显示对应的内容 */}
                 {selectedTab === 'Params' && <ParamTable tabId = {tabId}/>}
                 {/* {selectedTab === 'Authorization' && <div>Authorization content</div>} */}

@@ -35,17 +35,17 @@ function App() {
     ));
 
     return (
-        <div className="container mx-auto mt-4 px-2 flex">
+        <div className="container mx-2 mt-4 px-2 flex flex-1">
             <div className="mr-4">
                 {tabButtons}
                 <button
                     onClick={addTab}
-                    className="py-2 px-4 rounded-md bg-green-500 text-white mt-4"
+                    className="block py-2 px-4 rounded-md mb-2 flex-grow bg-green-500 text-white"
                 >
-                    Add Tab
+                    Add
                 </button>
             </div>
-            <div>
+            <div className='flex-grow'>
                 {tabContent}
             </div>
         </div>
