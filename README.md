@@ -3,6 +3,7 @@
 ## 收获
 - Rust全局变量：[OnceLock in std::sync - Rust](https://doc.rust-lang.org/std/sync/struct.OnceLock.html)
 - `Accept-Encoding`：该字段表示客户端可以接受的内容编码
+- `page.tsx`: special Next.js file that exports a React component, and it's required for the route to be accessible. 
 
 ## 踩坑
 ### 响应显示乱码

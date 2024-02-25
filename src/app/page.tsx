@@ -3,7 +3,7 @@
 import Tabs from "./tab";
 import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api";
-import {Provider,atom, useAtom, useAtomValue } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import { bodyAtom, bodyTypeAtom, headerMapAtom, urlAtom } from "./atom";
 import '../../public/prism.css';
 import Prism from "../../public/prism";
@@ -126,11 +126,6 @@ export default function Home() {
         </div>
       );
     }
-  };
-
-  // 输入框被点击时，全选输入框中的文本
-  const handleUrlClick = (event) => {
-    event.target.select(); // 选中输入框中的文本
   };
 
   const handleFocus = (event) => {
