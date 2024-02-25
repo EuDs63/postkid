@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Home from './work/page';
 import { ScopeProvider } from 'jotai-scope';
-import { anotherCountAtom, countAtom } from './atom';
+import { anotherCountAtom, countAtom, counterAtomFamily } from './atom';
 import Counter from './counter';
 
 function TabComponent() {
@@ -18,8 +18,8 @@ function TabComponent() {
                 return (
                     <>
                         <div> Tab 6</div>
-                        <ScopeProvider atoms={[anotherCountAtom]}>
-                            <Counter />
+                        <ScopeProvider atoms={[anotherCountAtom,counterAtomFamily]}>
+                            <Counter tabId={1}/>
                         </ScopeProvider>
                     </>
                 );
@@ -29,8 +29,8 @@ function TabComponent() {
         {
             title: 'Tab 7', content: () => {
                 return (
-                    <ScopeProvider atoms={[anotherCountAtom]}>
-                        <Counter />
+                    <ScopeProvider atoms={[anotherCountAtom,counterAtomFamily]}>
+                        <Counter tabId={2} />
                     </ScopeProvider>
                 );
             }

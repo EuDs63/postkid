@@ -1,4 +1,5 @@
 import { atom } from "jotai";
+import { atomFamily } from "jotai/utils";
 
 // 定义urlAtom
 export const urlAtom = atom('');
@@ -51,3 +52,9 @@ export const bodyAtom = atom(' ');
 
 export const countAtom = atom(0)
 export const anotherCountAtom = atom(0)
+
+export const counterAtomFamily = atomFamily((tabId) => {
+    return atom({
+        count: 0,
+    });
+});
