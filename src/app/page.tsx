@@ -51,9 +51,27 @@ function TabComponent() {
                     </div>
                 ))}
             </div>
-            {/* 渲染当前活动的标签页内容 */}
-            <div className="mt-4">
-                {tabs[activeTab].content()}
+            <div>
+                {activeTab === 0 && 
+                    (
+                        <>
+                            <div> Tab 6</div>
+                            <ScopeProvider atoms={[anotherCountAtom]}>
+                                <Counter />
+                            </ScopeProvider>
+                        </>
+                    ) 
+                }
+                {activeTab === 1 && 
+                    (
+                    <>
+                        <div> Tab 7</div>
+                        <ScopeProvider atoms={[anotherCountAtom]}>
+                            <Counter />
+                        </ScopeProvider>
+                    </>
+                    )
+                }
             </div>
         </div>
     );
