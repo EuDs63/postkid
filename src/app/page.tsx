@@ -33,7 +33,7 @@ function App() {
 
     const tabContent = tabs.map((tab) => (
         <div key={tab.id} className={`${currentTab === tab.id ? 'block' : 'hidden'}`}>
-            <Counter tabId={tab.id} />
+            {/* <Counter tabId={tab.id} /> */}
         </div>
     ));
 

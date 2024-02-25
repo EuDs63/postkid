@@ -50,6 +50,7 @@ export const bodyTypeAtom = atom('none');
 // 定义bodyAtom,类型不确定
 export const bodyAtom = atom(' ');
 
+/** 测试用
 export const countAtom = atom(0)
 export const anotherCountAtom = atom(0)
 
@@ -59,7 +60,8 @@ export const counterAtomFamily = atomFamily((tabId) => {
     });
 });
 
-export // 创建一个 atomFamily，每个标签页对应一个原子
-    const tabCounterAtomFamily = atomFamily((id) => {
-        return atom(0); // 每个标签页都有一个计数器，初始为 0
-    });
+export const tabCounterAtomFamily = atomFamily((id) => {
+    return atom(0); // 每个标签页都有一个计数器，初始为 0
+});
+
+**/

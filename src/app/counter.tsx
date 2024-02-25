@@ -1,4 +1,4 @@
-import { atom, useAtom } from 'jotai'
+import { useAtom } from 'jotai'
 import { countAtom, anotherCountAtom, counterAtomFamily, tabCounterAtomFamily } from './atom'
 
 
