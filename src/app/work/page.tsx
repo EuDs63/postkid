@@ -8,7 +8,6 @@ import { bodyAtomFamily, bodyTypeAtomFamily, headerMapAtomFamily, urlAtomFamily 
 import '../../../public/prism.css';
 import Prism from "../../../public/prism";
 
-
 export default function Work({ tabId }: { tabId: number }) {
   // 定义请求方法
   const [method, setMethod] = useState('GET');

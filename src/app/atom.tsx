@@ -4,12 +4,12 @@ import { atomFamily } from "jotai/utils";
 // 定义urlAtom
 export const urlAtom = atom('');
 
-export const urlAtomFamily = atomFamily((id) => {
+export const urlAtomFamily = atomFamily((id:number) => {
     return atom('');
 });
 
 // 定义paramAtomFamily
-export const paramAtomFamily = atomFamily((id) => {
+export const paramAtomFamily = atomFamily((id:number) => {
     return atom([
         { key: '', value: '', include: true }
     ]);

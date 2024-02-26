@@ -1,12 +1,17 @@
 'use client'
-import { SetStateAction, useState } from 'react';
+import { useState } from 'react';
 //import Counter from './counter';
 import Work from './work/page';
 
 function App() {
     const [currentTab, setCurrentTab] = useState(1); // 当前标签页
 
-    const [tabs, setTabs] = useState([
+    type Tab = {
+        id: number;
+        name: string;
+    }
+
+    const [tabs, setTabs] = useState<Tab[]>([
         { id: 1, name: 'Tab 1' },
         { id: 2, name: 'Tab 2' }
     ]); 
