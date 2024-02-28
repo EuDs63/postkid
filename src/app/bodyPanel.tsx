@@ -4,7 +4,10 @@ import React from 'react';
 import FormTable from './formTable';
 import { bodyTypeAtomFamily } from './atom';
 import { useAtom } from 'jotai';
-import BodyInput from './BodyInput';
+import dynamic from 'next/dynamic';
+
+const DynamicBodyInput = dynamic(() => import('./BodyInput'), { ssr: false });
+// import BodyInput from './BodyInput';
 
 function BodyPanel({ tabId }: { tabId: number }) {
     //const [contentType, setContentType] = useAtom(bodyTypeAtom);
@@ -52,7 +55,8 @@ function BodyPanel({ tabId }: { tabId: number }) {
             <div className="container">
                 {contentType === 'none' && <div className="bg-gray-100 p-4 flex-grow">None Content</div>}
                 {contentType === 'form-data' && <FormTable tabId = {tabId} />}
-                {contentType === 'raw' && <BodyInput tabId = {tabId} />}
+                {/* {contentType === 'raw' && <BodyInput tabId = {tabId} />} */}
+                {contentType === 'raw' && <DynamicBodyInput tabId={tabId} />} 
             </div>
         </div>
     );

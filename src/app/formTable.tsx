@@ -4,7 +4,7 @@ import { useAtom } from 'jotai';
 import React from 'react';
 import { formDataAtomFamily } from './atom';
 
-function FormTable(tabId:{tabId:number}) {
+function FormTable({ tabId }: { tabId: number }) {
     const [params, setParams] = useAtom(formDataAtomFamily(tabId));
 
     // 处理key变化事件

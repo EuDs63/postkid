@@ -25,7 +25,7 @@ export const paramAtomFamily = atomFamily((id:number) => {
 //     { key: '', value: '', include: false }
 // ]);
 
-export const headerAtomFamily = atomFamily((id) => {
+export const headerAtomFamily = atomFamily((id:number) => {
     return atom([
         { key: 'User-Agent', value: 'Mozilla/5.0', include: true },
         { key: 'Accept', value: '*/*', include: true },
@@ -48,7 +48,7 @@ export const headerAtomFamily = atomFamily((id) => {
 //     return result;
 // });
 
-export const headerMapAtomFamily = atomFamily((id) => {
+export const headerMapAtomFamily = atomFamily((id:number) => {
     return atom((get) => {
         const headers = get(headerAtomFamily(id));
         const result = new Map<string, string>();
@@ -68,7 +68,7 @@ export const headerMapAtomFamily = atomFamily((id) => {
 //     { key: '', value: '', include: true }
 // ]);
 
-export const formDataAtomFamily = atomFamily((id) => {
+export const formDataAtomFamily = atomFamily((id:number) => {
     return atom([
         { key: '', value: '', include: true }
     ]);
@@ -86,7 +86,7 @@ export const formDataAtomFamily = atomFamily((id) => {
 //     return result;
 // });
 
-export const formDataMapAtomFamily = atomFamily((id) => {
+export const formDataMapAtomFamily = atomFamily((id:number) => {
     return atom((get) => {
         const formData = get(formDataAtomFamily(id));
         const result = new Map<string, string>();
@@ -104,14 +104,14 @@ export const formDataMapAtomFamily = atomFamily((id) => {
 // 定义bodyTypeAtom:none、form-data、raw
 export const bodyTypeAtom = atom('none');
 
-export const bodyTypeAtomFamily = atomFamily((id) => {
+export const bodyTypeAtomFamily = atomFamily((id:number) => {
     return atom('none');
 });
 
 // 定义bodyAtom,类型不确定
 //export const bodyAtom = atom(' ');
 
-export const bodyAtomFamily = atomFamily((id) => {
+export const bodyAtomFamily = atomFamily((id:number) => {
     return atom(' ');
 });
 
@@ -119,12 +119,12 @@ export const bodyAtomFamily = atomFamily((id) => {
 export const countAtom = atom(0)
 export const anotherCountAtom = atom(0)
 
-export const counterAtomFamily = atomFamily((tabId) => {
+export const counterAtomFamily = atomFamily((tabId:number) => {
     return atom({
         count: 0,
     });
 });
 
-export const tabCounterAtomFamily = atomFamily((id) => {
+export const tabCounterAtomFamily = atomFamily((id:number) => {
     return atom(0); // 每个标签页都有一个计数器，初始为 0
 });

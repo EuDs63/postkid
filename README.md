@@ -28,6 +28,30 @@ Body的raw选项，我需要使其代码高亮。开始我直接引入了[PrismJ
 
 现在再看我的实现，感觉还是比较简陋的。每个标签页对应一个特定的`tagId`，然后`atomFamily`就是"a Map whose key is a param and whose value is an atom config"。
 
+## cargo tauri build
+**没想到整个过程会这么折磨，一个问题解决后，新的问题又出现了。**
+
+### Failed to fetch Inter from Google Fonts.
+参考[Error 'Failed to fetch `Noto Sans JP` from Google Fonts.' · Issue #45080 · vercel/next.js](https://github.com/vercel/next.js/issues/45080#issuecomment-1680665108)
+
+### Type 'number' is not assignable to type 'never'.
+排查无果，我选择修改`next.config.mjs`，`dangerously produce production code even when your application has errors`。
+
+参考[next.config.js Options: typescript | Next.js](https://nextjs.org/docs/app/api-reference/next-config-js/typescript)
+
+### ReferenceError: navigator is not defined
+这个报错刚开始让我觉得莫名奇妙，因为我记得自己没用到navigator。搜索后发现是我引入的`prism.js`使用到了。
+
+而报这个错的原因又与tauri有关:Tauri不支持Next.js的ssr模式。
+>Next.js is a React Framework that comes with both Server-Side Rendering (SSR) and Static-Site Generation (SSG) capabilities. To make Next.js work with Tauri we are going to use the SSG mode since it generates only static files that can be included in the final binary.
+
+我最终的解决方法是参考[高级特性: 动态导入（Import） | Next.js | Next.js中文网](https://www.nextjs.cn/docs/advanced-features/dynamic-import)，将使用到prism的组件动态引入。
+
+### WixTools安装失败
+> Connection Failed: Connect error: 由于连接方在一段时间后没有正确答复或连接 的主机没有反应，连接尝试失败。 (os error 10060)
+
+参考[[如何解决安装失败] · Issue #7338 · tauri-apps/tauri](https://github.com/tauri-apps/tauri/issues/7338#issuecomment-1923680714)。
+
 ## todo
 - [ ] 测试post的form-data
 - [x] 实现仿postman的url输入框
@@ -59,3 +83,5 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [react-simple-code-editor/react-simple-code-editor: Simple no-frills code editor with syntax highlighting](https://github.com/react-simple-code-editor/react-simple-code-editor)
 - [React 中后台系统多页签实现 ｜ 项目复盘 - 掘金](https://juejin.cn/post/6941683774153293837)
 - [Family — Jotai, primitive and flexible state management for React](https://jotai.org/docs/utilities/family)
+- [[如何解决安装失败] · Issue #7338 · tauri-apps/tauri](https://github.com/tauri-apps/tauri/issues/7338#issuecomment-1923680714)
+- [高级特性: 动态导入（Import） | Next.js | Next.js中文网](https://www.nextjs.cn/docs/advanced-features/dynamic-import)

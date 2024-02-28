@@ -1,3 +1,5 @@
+'use client'
+
 import { useAtom } from 'jotai';
 import { bodyAtomFamily } from './atom';
 import Editor from 'react-simple-code-editor'

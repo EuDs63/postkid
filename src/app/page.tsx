@@ -1,7 +1,10 @@
 'use client'
 import { useState } from 'react';
+import dynamic from 'next/dynamic'
+
 //import Counter from './counter';
-import Work from './work/page';
+const DynamicWork = dynamic(() => import('./work'), { ssr: false });
+//import Work from './work';
 
 function App() {
     const [currentTab, setCurrentTab] = useState(1); // 当前标签页
@@ -35,7 +38,8 @@ function App() {
     const tabContent = tabs.map((tab) => (
         <div key={tab.id} className={`${currentTab === tab.id ? 'block' : 'hidden'}`}>
             {/* <Counter tabId={tab.id} /> */}
-            < Work tabId={tab.id} />
+            {/* < Work tabId={tab.id} /> */}
+            < DynamicWork tabId={tab.id} />
         </div>
     ));
 

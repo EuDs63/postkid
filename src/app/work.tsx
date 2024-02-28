@@ -1,14 +1,14 @@
 'use client'
 
-import Tabs from "../tab";
+import Tabs from "./tab";
 import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api";
 import { useAtom, useAtomValue } from 'jotai'
-import { bodyAtomFamily, bodyTypeAtomFamily, headerMapAtomFamily, urlAtomFamily } from "../atom";
-import '../../../public/prism.css';
-import Prism from "../../../public/prism";
+import { bodyAtomFamily, bodyTypeAtomFamily, headerMapAtomFamily, urlAtomFamily } from "./atom";
+import '../../public/prism.css';
+import Prism from "../../public/prism";
 
-export default function Work({ tabId }: { tabId: number }) {
+export default function Work({ tabId = 0 }: { tabId?: number }) {
   // 定义请求方法
   const [method, setMethod] = useState('GET');
 
@@ -98,11 +98,13 @@ export default function Work({ tabId }: { tabId: number }) {
 
     const { success, data, error } = response;
 
-    useEffect(() => {
-      if (data) {
-        Prism.highlightAll();
-      }
-    },[data]);
+    // useEffect(() => {
+    //   // if (data) {
+    //   //   Prism.highlightAll();
+    //   // }
+    //   Prism.highlightAll();
+    // }, [data]);
+
 
     if (success) {
       return (
