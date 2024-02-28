@@ -56,23 +56,8 @@ Body的raw选项，我需要使其代码高亮。开始我直接引入了[PrismJ
 - [ ] 测试post的form-data
 - [x] 实现仿postman的url输入框
 - [x] 实现多开标签页
-- [x] 实现用户记录保存
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- [ ] 实现用户记录保存
+- [ ] 实现自适应窗口大小
 
 ## references
 - [OnceLock in std::sync - Rust](https://doc.rust-lang.org/std/sync/struct.OnceLock.html)

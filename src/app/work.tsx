@@ -108,7 +108,7 @@ export default function Work({ tabId = 0 }: { tabId?: number }) {
 
     if (success) {
       return (
-        <div className="border border-green-500 p-4 rounded-md h-auto overflow-y-auto max-h-[calc(100vh-250px)]">
+        <div className="border border-green-500 p-4 rounded-md h-auto overflow-y-auto max-h-[calc(100vh-250px)] overflow-x-auto max-w-[650px]">
           <div className="text-lg font-bold mb-2">SUCCESS</div>
           {/* {response.data} */}
           <pre>
