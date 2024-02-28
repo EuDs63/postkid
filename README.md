@@ -1,5 +1,7 @@
 # Postkid
 
+**A lightweight tool offering key functionalities inspired by Postman.**
+
 ## 收获
 - Rust全局变量：[OnceLock in std::sync - Rust](https://doc.rust-lang.org/std/sync/struct.OnceLock.html)
 - `Accept-Encoding`：该字段表示客户端可以接受的内容编码
@@ -28,7 +30,7 @@ Body的raw选项，我需要使其代码高亮。开始我直接引入了[PrismJ
 
 现在再看我的实现，感觉还是比较简陋的。每个标签页对应一个特定的`tagId`，然后`atomFamily`就是"a Map whose key is a param and whose value is an atom config"。
 
-## cargo tauri build
+### cargo tauri build
 **没想到整个过程会这么折磨，一个问题解决后，新的问题又出现了。**
 
 ### Failed to fetch Inter from Google Fonts.
