@@ -1,6 +1,28 @@
-# Postkid
+<div align = "center">
+<h1>Postkid</h1>
+<img width="150" heigth="150" src="src-tauri\icons\icon.png">
 
-**A lightweight tool offering key functionalities inspired by Postman.**
+<b>A lightweight tool offering key functionalities inspired by Postman.</b>
+
+</div>
+
+<details>
+<summary>Demo</summary>
+<img src="./doc/demo1.jpg">
+</details>
+
+## Todo
+- [ ] 测试post的form-data
+- [x] 实现仿postman的url输入框
+- [x] 实现多开标签页
+- [ ] 实现用户记录保存
+- [ ] 实现自适应窗口大小
+- [ ] 可对tab进行命名和删除
+- [ ] 引入Github Action，自动构建
+
+## Warn 
+- Potential Issues with Tauri
+- Tested Solely on Windows 10
 
 ## 收获
 - Rust全局变量：[OnceLock in std::sync - Rust](https://doc.rust-lang.org/std/sync/struct.OnceLock.html)
@@ -53,13 +75,6 @@ Body的raw选项，我需要使其代码高亮。开始我直接引入了[PrismJ
 > Connection Failed: Connect error: 由于连接方在一段时间后没有正确答复或连接 的主机没有反应，连接尝试失败。 (os error 10060)
 
 参考[[如何解决安装失败] · Issue #7338 · tauri-apps/tauri](https://github.com/tauri-apps/tauri/issues/7338#issuecomment-1923680714)。
-
-## todo
-- [ ] 测试post的form-data
-- [x] 实现仿postman的url输入框
-- [x] 实现多开标签页
-- [ ] 实现用户记录保存
-- [ ] 实现自适应窗口大小
 
 ## references
 - [OnceLock in std::sync - Rust](https://doc.rust-lang.org/std/sync/struct.OnceLock.html)
