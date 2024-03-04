@@ -18,7 +18,7 @@
 - [ ] 实现用户记录保存
 - [ ] 实现自适应窗口大小
 - [ ] 可对tab进行命名和删除
-- [ ] 引入Github Action，自动构建
+- [x] 引入Github Action，自动构建
 
 ## Warn 
 - Potential Issues with Tauri
@@ -91,3 +91,4 @@ Body的raw选项，我需要使其代码高亮。开始我直接引入了[PrismJ
 - [高级特性: 动态导入（Import） | Next.js | Next.js中文网](https://www.nextjs.cn/docs/advanced-features/dynamic-import)
 - [真的不可以在 React 组件内部嵌套定义子组件吗？ - PRIN BLOG](https://prin.pw/react-unstable-nested-components/)
 - [useCallback – React](https://react.dev/reference/react/useCallback)
+- [pnpm/action-setup: Install pnpm package manager](https://github.com/pnpm/action-setup)
