@@ -19,6 +19,7 @@
 - [ ] 实现自适应窗口大小
 - [ ] 可对tab进行命名和删除
 - [x] 引入Github Action，自动构建
+- [ ] 尝试使用Container Components重构ParamTable，HeaderTable，FormTable三个组件
 
 ## Warn 
 - Potential Issues with Tauri

@@ -9,7 +9,7 @@ function ParamTable({ tabId, parseUrl,buildUrl }: { tabId: number,parseUrl: (url
 
     const [url,setUrl] = useAtom(urlAtomFamily(tabId));
 
-    //初始化时解析 url
+    // 当url变化时解析url
     useEffect(() => {
         if (url) {
             setParams(parseUrl(url));
@@ -86,7 +86,6 @@ function ParamTable({ tabId, parseUrl,buildUrl }: { tabId: number,parseUrl: (url
                 ))}
             </tbody>
         </table>
-
         </>
     );
 }
