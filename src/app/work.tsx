@@ -1,6 +1,6 @@
 'use client'
 
-import Tabs from "./tab";
+import OptionPanel from "./optionPanel";
 import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api";
 import { useAtom, useAtomValue } from 'jotai'
@@ -168,7 +168,7 @@ export default function Work({ tabId = 0 }: { tabId?: number }) {
           />
             <button className="bg-blue-500 text-white p-2 rounded-md" onClick={handleRequest}>Send</button>
           </div>
-          <Tabs tabId={tabId} />
+          <OptionPanel tabId={tabId} />
 
           <Response response={response} />
         </div>

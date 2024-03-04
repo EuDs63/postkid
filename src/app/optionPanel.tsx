@@ -4,7 +4,7 @@ import ParamTable from './ParamTable';
 import HeaderTable from './HeaderTable';
 import BodyPanel from './bodyPanel';
 
-function TabItem({ tabName, selectedTab, onClick }: { tabName: string, selectedTab: string, onClick: (tabName: string) => void }) {
+function OptionItem({ tabName, selectedTab, onClick }: { tabName: string, selectedTab: string, onClick: (tabName: string) => void }) {
     return (
         <div
             className={`cursor-pointer px-4 py-2 border-b-2 ${selectedTab === tabName ? 'border-blue-500' : ''}`}
@@ -15,11 +15,11 @@ function TabItem({ tabName, selectedTab, onClick }: { tabName: string, selectedT
     );
 }
 
-function Tabs({ tabId }: { tabId: number }) {
-    const [selectedTab, setSelectedTab] = useState('Params');
+function OptionPanel({ tabId }: { tabId: number }) {
+    const [selectedOption, setSelectedOption] = useState('Params');
 
     const handleTabChange = (tabName: React.SetStateAction<string>) => {
-        setSelectedTab(tabName);
+        setSelectedOption(tabName);
     };
 
     // 解析url
@@ -50,23 +50,42 @@ function Tabs({ tabId }: { tabId: number }) {
         return result;
     }, []);
 
+    // 由数组拼接参数得到url
+    const buildUrl = useCallback((url: string,params: { key: string, value: string, include: boolean }[]) => {
+        // 获取url中的路径,但不使用 URL 对象，因为 URL 对象会自动解码参数
+        const path = url.split('?')[0];
+
+        const includeParams = params.filter(param => param.include);
+
+        if (includeParams.length === 0) {
+            return path;
+        }
+
+        const queryString = includeParams
+            .filter(param => param.key !== '' && param.value !== '') // 仅包含 key 和 value 都不为空的参数
+            .map(param => `${encodeURIComponent(param.key)}=${encodeURIComponent(param.value)}`) // 对键值进行编码
+            .join('&'); // 使用 & 符号连接参数
+
+        return `${path}?${queryString}`;
+    },[]);
+
     return (
         <div className="py-2 border-gray-500">
             <div className="flex mb-4">
-                <TabItem tabName="Params" selectedTab={selectedTab} onClick={handleTabChange} />
+                <OptionItem tabName="Params" selectedTab={selectedOption} onClick={handleTabChange} />
                 {/* <TabItem tabName="Authorization" selectedTab={selectedTab} onClick={handleTabChange} /> */}
-                <TabItem tabName="Headers" selectedTab={selectedTab} onClick={handleTabChange} />
-                <TabItem tabName="Body" selectedTab={selectedTab} onClick={handleTabChange} />
+                <OptionItem tabName="Headers" selectedTab={selectedOption} onClick={handleTabChange} />
+                <OptionItem tabName="Body" selectedTab={selectedOption} onClick={handleTabChange} />
             </div>
             <div className="border border-gray-500 rounded-md p-4 mb-2">
                 {/* 根据选中的 tab 显示对应的内容 */}
-                {selectedTab === 'Params' && <ParamTable tabId = {tabId} parseUrl={parseUrl}/>}
+                {selectedOption === 'Params' && <ParamTable tabId = {tabId} parseUrl={parseUrl} buildUrl={buildUrl} />}
                 {/* {selectedTab === 'Authorization' && <div>Authorization content</div>} */}
-                {selectedTab === 'Headers' && <HeaderTable tabId={tabId} />}
-                {selectedTab === 'Body' && <BodyPanel tabId={tabId}  />}
+                {selectedOption === 'Headers' && <HeaderTable tabId={tabId} />}
+                {selectedOption === 'Body' && <BodyPanel tabId={tabId}  />}
             </div>
         </div>
     );
 }
 
-export default Tabs;
+export default OptionPanel;

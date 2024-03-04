@@ -4,7 +4,7 @@ import { useAtom } from 'jotai';
 import React, { useEffect } from 'react';
 import { paramAtomFamily, urlAtomFamily } from './atom';
 
-function ParamTable({ tabId, parseUrl }: { tabId: number,parseUrl: (url: string) => { key: string, value: string, include: boolean }[] }) {
+function ParamTable({ tabId, parseUrl,buildUrl }: { tabId: number,parseUrl: (url: string) => { key: string, value: string, include: boolean }[],buildUrl: (url: string,params: { key: string, value: string, include: boolean }[]) => string }) {
     const [params, setParams] = useAtom(paramAtomFamily(tabId));
 
     const [url,setUrl] = useAtom(urlAtomFamily(tabId));
@@ -16,29 +16,9 @@ function ParamTable({ tabId, parseUrl }: { tabId: number,parseUrl: (url: string)
         }
     }, [url]);
 
-    // 由数组拼接参数得到url
-    function buildUrl(params: { key: string, value: string, include: boolean }[]) {
-        // 获取url中的路径,但不使用 URL 对象，因为 URL 对象会自动解码参数
-        const path = url.split('?')[0];
-
-        const includeParams = params.filter(param => param.include);
-
-        if (includeParams.length === 0) {
-            return path;
-        }
-
-        const queryString = includeParams
-            .filter(param => param.key !== '' && param.value !== '') // 仅包含 key 和 value 都不为空的参数
-            .map(param => `${encodeURIComponent(param.key)}=${encodeURIComponent(param.value)}`) // 对键值进行编码
-            .join('&'); // 使用 & 符号连接参数
-
-        return `${path}?${queryString}`;
-
-   }
-
     // 当 params 变化时更新 url
     useEffect(() => {
-        setUrl(buildUrl(params));
+        setUrl(buildUrl(url,params));
     }, [params]);
 
     // 处理key变化事件
