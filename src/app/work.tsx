@@ -8,15 +8,65 @@ import { bodyAtomFamily, bodyTypeAtomFamily, headerMapAtomFamily, urlAtomFamily 
 import '../../public/prism.css';
 import Prism from "../../public/prism";
 
+
+const Response = ({ response }: { response: any }) => {
+  useEffect(() => {
+    if (response && response.data) {
+      Prism.highlightAll();
+    }
+  }, [response]);
+
+  if (!response) {
+    return null;
+  }
+
+  const { success, data, error } = response;
+
+  //  React Hook "useEffect" is called conditionally. 
+  //  React Hooks must be called in the exact same order in every component render
+  // useEffect(() => {
+  //   if (data) {
+  //     Prism.highlightAll();
+  //   }
+  // }, [data]);
+
+  if (success) {
+    return (
+      <div className="border border-green-500 p-4 rounded-md h-auto overflow-y-auto max-h-[calc(100vh-250px)] overflow-x-auto max-w-[650px]">
+        <div className="text-lg font-bold mb-2">SUCCESS</div>
+        {/* {response.data} */}
+        <pre>
+          <code className="language-json language-html">
+            {response.data}
+          </code>
+        </pre>
+        {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
+      </div>
+    );
+  } else if (error) {
+    return (
+      <div className="border border-red-500 p-4 rounded-md overflow-y-auto">
+        <div className="text-lg font-bold mb-2">ERROR</div>
+        <p>{error}</p>
+      </div>
+    );
+  }
+  else {
+    return (
+      <div className="border border-gray-500 p-4 rounded-md overflow-y-auto">
+        <div className="text-lg font-bold mb-2">Enter the URL and click send to get a response</div>
+        <p>{error}</p>
+      </div>
+    );
+  }
+};
+
 export default function Work({ tabId = 0 }: { tabId?: number }) {
   // 定义请求方法
   const [method, setMethod] = useState('GET');
 
   // 定义url
-  //const [url, setUrl] = useAtom(urlAtom);
   const [url, setUrl] = useAtom(urlAtomFamily(tabId));
-
-  //const [url, setUrl] = useState('');
 
   // 定义response,为一个结构体，包含了success、data、error三个字段
   const [response,setResponse] = useState({success: false, data: '', error: ''})
@@ -40,18 +90,12 @@ export default function Work({ tabId = 0 }: { tabId?: number }) {
   }, [url, setUrl]); // 确保 setUrl 在依赖中
 
   // 获取header_map
-  //const headerMap = useAtomValue(headerMapAtom);
-
   const headerMap = useAtomValue(headerMapAtomFamily(tabId));
 
   // 获取body_type
-  //const bodyType = useAtomValue(bodyTypeAtom);
-
   const bodyType = useAtomValue(bodyTypeAtomFamily(tabId));
 
   // 获取body
-  //const body = useAtomValue(bodyAtom);
-
   const body = useAtomValue(bodyAtomFamily(tabId));
 
   interface RequestBean {
@@ -63,8 +107,9 @@ export default function Work({ tabId = 0 }: { tabId?: number }) {
     [key: string]: any;
   }
 
+  // 处理请求事件
   const handleRequest = () => {
-    console.log("send request, method:", method, "url:", url, "headerMap:", headerMap, "bodyType:", bodyType, "body:", body);
+    // console.log("send request, method:", method, "url:", url, "headerMap:", headerMap, "bodyType:", bodyType, "body:", body);
     // 清空response
     setResponse({success: false, data: '', error: ''});
 
@@ -91,51 +136,6 @@ export default function Work({ tabId = 0 }: { tabId?: number }) {
       });
   }
 
-  const Response = ({ response }: { response: any }) => {
-    if (!response) {
-      return null;
-    }
-
-    const { success, data, error } = response;
-
-    // useEffect(() => {
-    //   // if (data) {
-    //   //   Prism.highlightAll();
-    //   // }
-    //   Prism.highlightAll();
-    // }, [data]);
-
-
-    if (success) {
-      return (
-        <div className="border border-green-500 p-4 rounded-md h-auto overflow-y-auto max-h-[calc(100vh-250px)] overflow-x-auto max-w-[650px]">
-          <div className="text-lg font-bold mb-2">SUCCESS</div>
-          {/* {response.data} */}
-          <pre>
-            <code className="language-json language-html">
-              {response.data}
-            </code>
-          </pre>
-          {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
-        </div>
-      );
-    } else if (error){
-      return (
-        <div className="border border-red-500 p-4 rounded-md overflow-y-auto">
-          <div className="text-lg font-bold mb-2">ERROR</div>
-          <p>{error}</p>
-        </div>
-      );
-    }
-    else {
-      return (
-        <div className="border border-gray-500 p-4 rounded-md overflow-y-auto">
-          <div className="text-lg font-bold mb-2">Enter the URL and click send to get a response</div>
-          <p>{error}</p>
-        </div>
-      );
-    }
-  };
 
   // @ts-ignore
   const handleFocus = (event) => {
