@@ -4,40 +4,10 @@ import { useAtom } from 'jotai';
 import React, { useEffect } from 'react';
 import { paramAtomFamily, urlAtomFamily } from './atom';
 
-function ParamTable({ tabId }: { tabId: number }) {
-    //const [params, setParams] = useState([{ key: '', value: '', include: true}]);
-
+function ParamTable({ tabId, parseUrl }: { tabId: number,parseUrl: (url: string) => { key: string, value: string, include: boolean }[] }) {
     const [params, setParams] = useAtom(paramAtomFamily(tabId));
 
-    //const [url, setUrl] = useAtom(urlAtom);
     const [url,setUrl] = useAtom(urlAtomFamily(tabId));
-
-    // 由 url 得到数组
-    function parseUrl(url: string) {
-        //先判断url是否符合URL
-        if (!url) {
-            return [{ key: '', value: '', include: false }];
-        }
-
-        // 获取查询字符串
-        const search = url.split('?')[1];
-        if (!search) {
-            return [{ key: '', value: '', include: false }];
-        }
-        const params = new URLSearchParams(search);
-
-        // 不使用 URL 对象，因为 URL 对象会自动解码参数
-        // const search = new URL(url).search;
-        // const params = new URLSearchParams(search);
-
-        const result = [];
-        // @ts-ignore
-        for (const [key, value] of params) {
-            result.push({ key, value, include: true });
-        }
-        result.push({ key: '', value: '', include: false });
-        return result;
-    }
 
     //初始化时解析 url
     useEffect(() => {
