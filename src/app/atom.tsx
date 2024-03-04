@@ -32,6 +32,7 @@ export const headerAtomFamily = atomFamily((id:number) => {
         { key: 'Accept-Encoding', value: 'deflate', include: false },
         { key: 'Content-Type', value: 'application/json', include: true },
         { key: 'Connection', value: 'keep-alive', include: true },
+        { key: 'Authorization', value: 'Bear ', include: false },
         { key: '', value: '', include: false }
     ]);
 });
