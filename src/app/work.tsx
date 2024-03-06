@@ -1,26 +1,37 @@
 'use client'
 
 import OptionPanel from "./optionPanel";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { invoke } from "@tauri-apps/api";
 import { useAtom, useAtomValue } from 'jotai'
 import { bodyAtomFamily, bodyTypeAtomFamily, headerMapAtomFamily, urlAtomFamily } from "./atom";
 import '../../public/prism.css';
 import Prism from "../../public/prism";
 
+interface ResponseBean {
+  init: boolean;
+  waiting: boolean;
+  success: boolean;
+  data: string;
+  error: string;
+}
 
-const Response = ({ response }: { response: any }) => {
+const Response = ({ response }: { response: ResponseBean }) => {
+  const codeElementRef = useRef<HTMLPreElement>(null);
+
   useEffect(() => {
-    if (response && response.data) {
-      Prism.highlightAll();
+    if (response.success && codeElementRef.current) {
+      try {
+        Prism.highlightElement(codeElementRef.current);
+      } catch (error) {
+        console.error('Prism.js error:', error);
+      }
     }
-  }, [response]);
+  }, [response.success]);
 
   if (!response) {
     return null;
   }
-
-  const { success, data, error } = response;
 
   //  React Hook "useEffect" is called conditionally. 
   //  React Hooks must be called in the exact same order in every component render
@@ -30,35 +41,41 @@ const Response = ({ response }: { response: any }) => {
   //   }
   // }, [data]);
 
-  if (success) {
-    return (
-      <div className="border border-green-500 p-4 rounded-md h-auto overflow-y-auto max-h-[calc(100vh-250px)] overflow-x-auto max-w-[650px]">
-        <div className="text-lg font-bold mb-2">SUCCESS</div>
-        {/* {response.data} */}
-        <pre>
-          <code className="language-json language-html">
-            {response.data}
-          </code>
-        </pre>
-        {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
-      </div>
-    );
-  } else if (error) {
-    return (
-      <div className="border border-red-500 p-4 rounded-md overflow-y-auto">
-        <div className="text-lg font-bold mb-2">ERROR</div>
-        <p>{error}</p>
-      </div>
-    );
-  }
-  else {
+  if (response.init){
     return (
       <div className="border border-gray-500 p-4 rounded-md overflow-y-auto">
         <div className="text-lg font-bold mb-2">Enter the URL and click send to get a response</div>
-        <p>{error}</p>
       </div>
     );
   }
+  else if (response.waiting) {
+    return (
+      <div className="border border-gray-500 p-4 rounded-md overflow-y-auto">
+        <div className="text-lg font-bold mb-2">Waiting for response...</div>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        {response.success ? (
+          <div className="border border-green-500 p-4 rounded-md h-auto overflow-y-auto max-h-[calc(100vh-250px)] overflow-x-auto max-w-[650px]">
+            <div className="text-lg font-bold mb-2">SUCCESS</div>
+            <pre ref={codeElementRef}>
+              <code className="language-json language-html">
+                {response.data}
+              </code>
+            </pre>
+          </div>
+        ) : (
+          <div className="border border-red-500 p-4 rounded-md overflow-y-auto">
+            <div className="text-lg font-bold mb-2">ERROR</div>
+            <p>{response.error}</p>
+          </div>
+        )}
+      </div>
+    );
+  }
+
 };
 
 export default function Work({ tabId = 0 }: { tabId?: number }) {
@@ -68,8 +85,7 @@ export default function Work({ tabId = 0 }: { tabId?: number }) {
   // 定义url
   const [url, setUrl] = useAtom(urlAtomFamily(tabId));
 
-  // 定义response,为一个结构体，包含了success、data、error三个字段
-  const [response,setResponse] = useState({success: false, data: '', error: ''})
+  const [response,setResponse] = useState<ResponseBean>({init:true,waiting:false,success: false, data: '', error: ''})
 
   // 处理方法变化事件
   const handleMethodChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -109,11 +125,12 @@ export default function Work({ tabId = 0 }: { tabId?: number }) {
 
   // 处理请求事件
   const handleRequest = () => {
-    // console.log("send request, method:", method, "url:", url, "headerMap:", headerMap, "bodyType:", bodyType, "body:", body);
+    console.log("send request, method:", method, "url:", url, "headerMap:", headerMap, "bodyType:", bodyType, "body:", body);
     // 清空response
-    setResponse({success: false, data: '', error: ''});
+    setResponse({init:false,waiting:true,success: false, data: '', error: ''});
 
-    const requestBean: RequestBean = {
+    // header_map 不行，报错invalid args `header_map` for command `send_request`: command send_request missing required key headerMap
+    const request: RequestBean = {
       method: method,
       url: url,
       header_map: headerMap,
@@ -121,21 +138,15 @@ export default function Work({ tabId = 0 }: { tabId?: number }) {
       body: body
     }
     
-    // header_map 不行，报错invalid args `header_map` for command `send_request`: command send_request missing required key headerMap
-    invoke<string>('send_request',{ requestBean })
+    invoke<string>('send_request',{ requestBean: request })
       .then(result => {
-        setResponse(
-        {success: true, data: result, error: ''});
-        console.log("result:", result);
+        setResponse({init:false,waiting: false,success: true, data: result, error: ''});
       })
       .catch( (error) => {
-        setResponse(
-          {success: false, data: '', error: error}
-        );
+        setResponse({init:false,waiting:false,success: false, data: '', error: error});
         console.error(error);
       });
   }
-
 
   // @ts-ignore
   const handleFocus = (event) => {
