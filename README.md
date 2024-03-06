@@ -79,6 +79,9 @@ Body的raw选项，我需要使其代码高亮。开始我直接引入了[PrismJ
 
 参考[[如何解决安装失败] · Issue #7338 · tauri-apps/tauri](https://github.com/tauri-apps/tauri/issues/7338#issuecomment-1923680714)。
 
+### Failed to execute 'removeChild' on 'Node'
+花了好些时间没解决，但参考[Failed to execute 'removeChild' on 'Node' - 掘金](https://juejin.cn/post/6938321875298680845),包一个`<div>`就解决了。
+
 ## references
 - [OnceLock in std::sync - Rust](https://doc.rust-lang.org/std/sync/struct.OnceLock.html)
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.

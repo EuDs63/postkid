@@ -21,13 +21,14 @@ const Response = ({ response }: { response: ResponseBean }) => {
 
   useEffect(() => {
     if (response.success && codeElementRef.current) {
+      console.log("the ref element is", codeElementRef.current);
       try {
         Prism.highlightElement(codeElementRef.current);
       } catch (error) {
         console.error('Prism.js error:', error);
       }
     }
-  }, [response.success]);
+  }, [response.data]);
 
   if (!response) {
     return null;
@@ -60,11 +61,13 @@ const Response = ({ response }: { response: ResponseBean }) => {
         {response.success ? (
           <div className="border border-green-500 p-4 rounded-md h-auto overflow-y-auto max-h-[calc(100vh-250px)] overflow-x-auto max-w-[650px]">
             <div className="text-lg font-bold mb-2">SUCCESS</div>
-            <pre ref={codeElementRef}>
-              <code className="language-json language-html">
-                {response.data}
-              </code>
-            </pre>
+            <div>
+              <pre>
+                <code className="language-json language-html" ref={codeElementRef}>
+                  {response.data}
+                </code>
+              </pre>
+            </div>
           </div>
         ) : (
           <div className="border border-red-500 p-4 rounded-md overflow-y-auto">
@@ -75,7 +78,6 @@ const Response = ({ response }: { response: ResponseBean }) => {
       </div>
     );
   }
-
 };
 
 export default function Work({ tabId = 0 }: { tabId?: number }) {
