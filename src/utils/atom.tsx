@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 import { atomFamily } from "jotai/utils";
-import Param from "./param";
+import { Param } from '@/utils/interface';
 // 定义urlAtom
 export const urlAtom = atom('');
 

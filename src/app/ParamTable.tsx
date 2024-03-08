@@ -5,7 +5,7 @@ import React, { useEffect } from 'react';
 import { paramAtomFamily, urlAtomFamily } from '../utils/atom';
 import Table from '@/components/table';
 import { unionBy } from 'lodash';
-import Param from '@/utils/param';
+import { Param } from '@/utils/interface';
 
 function ParamTable({ tabId, parseUrl,buildUrl }: { tabId: number,parseUrl: (url: string) => Param[],buildUrl: (url: string,params: Param[]) => string }) {
     const [params, setParams] = useAtom(paramAtomFamily(tabId));

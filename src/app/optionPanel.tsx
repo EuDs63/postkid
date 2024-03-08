@@ -3,7 +3,7 @@ import React, { useCallback, useState } from 'react';
 import ParamTable from './ParamTable';
 import HeaderTable from './HeaderTable';
 import BodyPanel from './bodyPanel';
-import Param from '@/utils/param';
+import { Param } from '@/utils/interface';
 
 function OptionItem({ tabName, selectedTab, onClick }: { tabName: string, selectedTab: string, onClick: (tabName: string) => void }) {
     return (

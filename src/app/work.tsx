@@ -6,79 +6,8 @@ import { invoke } from "@tauri-apps/api";
 import { useAtom, useAtomValue } from 'jotai'
 import { bodyAtomFamily, bodyTypeAtomFamily, headerMapAtomFamily, urlAtomFamily } from "../utils/atom";
 import '../../public/prism.css';
-import Prism from "../../public/prism";
-
-interface ResponseBean {
-  init: boolean;
-  waiting: boolean;
-  success: boolean;
-  data: string;
-  error: string;
-}
-
-const Response = ({ response }: { response: ResponseBean }) => {
-  const codeElementRef = useRef<HTMLPreElement>(null);
-
-  useEffect(() => {
-    if (response.success && codeElementRef.current) {
-      console.log("the ref element is", codeElementRef.current);
-      try {
-        Prism.highlightElement(codeElementRef.current);
-      } catch (error) {
-        console.error('Prism.js error:', error);
-      }
-    }
-  }, [response.data]);
-
-  if (!response) {
-    return null;
-  }
-
-  //  React Hook "useEffect" is called conditionally. 
-  //  React Hooks must be called in the exact same order in every component render
-  // useEffect(() => {
-  //   if (data) {
-  //     Prism.highlightAll();
-  //   }
-  // }, [data]);
-
-  if (response.init){
-    return (
-      <div className="border border-gray-500 p-4 rounded-md overflow-y-auto">
-        <div className="text-lg font-bold mb-2">Enter the URL and click send to get a response</div>
-      </div>
-    );
-  }
-  else if (response.waiting) {
-    return (
-      <div className="border border-gray-500 p-4 rounded-md overflow-y-auto">
-        <div className="text-lg font-bold mb-2">Waiting for response...</div>
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        {response.success ? (
-          <div className="border border-green-500 p-4 rounded-md h-auto overflow-y-auto max-h-[calc(100vh-250px)] overflow-x-auto max-w-[650px]">
-            <div className="text-lg font-bold mb-2">SUCCESS</div>
-            <div>
-              <pre>
-                <code className="language-json language-html" ref={codeElementRef}>
-                  {response.data}
-                </code>
-              </pre>
-            </div>
-          </div>
-        ) : (
-          <div className="border border-red-500 p-4 rounded-md overflow-y-auto">
-            <div className="text-lg font-bold mb-2">ERROR</div>
-            <p>{response.error}</p>
-          </div>
-        )}
-      </div>
-    );
-  }
-};
+import { ResponseBean} from '@/utils/interface'
+import Response from "./response";
 
 export default function Work({ tabId = 0 }: { tabId?: number }) {
   // 定义请求方法
@@ -101,9 +30,14 @@ export default function Work({ tabId = 0 }: { tabId?: number }) {
     setUrl(event.target.value);
   };
 
+  const urlAreaRef = useRef<HTMLTextAreaElement>(null);
+
   useEffect(() => {
     if (url) {
       setUrl(url); // 更新 urlAtom 的值，触发 urlArrayAtom 重新计算
+      const urlArea = urlAreaRef.current;
+      urlArea.style.height = 'auto';
+      urlArea.style.height = `${urlArea.scrollHeight}px`
     }
   }, [url, setUrl]); // 确保 setUrl 在依赖中
 
@@ -149,11 +83,16 @@ export default function Work({ tabId = 0 }: { tabId?: number }) {
         console.error(error);
       });
   }
+  const handleClick = () => {
+    const urlArea = urlAreaRef.current;
+    urlArea.style.height = 'auto';
+    urlArea.style.height = `${urlArea.scrollHeight}px`
 
-  // @ts-ignore
-  const handleFocus = (event) => {
-    event.target.style.height = 'auto';
-    event.target.style.height = `${event.target.scrollHeight}px`;
+  } 
+  const handleBlur = () => {
+    const urlArea = urlAreaRef.current;
+    urlArea.style.height = 'auto';
+    //urlArea.style.whiteSpace= 'nowrap';
   };
 
   return (
@@ -169,17 +108,17 @@ export default function Work({ tabId = 0 }: { tabId?: number }) {
               </select>
             </label>
 
-          {/* <input type="text" className="border border-gray-300 p-2 rounded-md mr-4 w-3/4 break-all" 
-                 placeholder="Enter URL" value={url} onChange={handleUrlChange} onClick={handleUrlClick}/> */}
           <textarea
             className="p-2 rounded-md mr-2 resize-none flex-grow focus:outline focus:border-blue-500"
+            ref = {urlAreaRef}
             value={url}
             rows={1}
             onChange={handleUrlChange}
-            onClick={handleFocus}
+            onFocus={handleClick}
+            onBlur={handleBlur}
             placeholder="Enter url..."
           />
-            <button className="bg-blue-500 text-white p-2 rounded-md" onClick={handleRequest}>Send</button>
+          <button className="bg-blue-500 text-white p-2 rounded-md" onClick={handleRequest}>Send</button>
           </div>
           <OptionPanel tabId={tabId} />
 
