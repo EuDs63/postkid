@@ -2,7 +2,7 @@
 
 import { useAtom } from 'jotai';
 import React from 'react';
-import { formDataAtomFamily } from './atom';
+import { formDataAtomFamily } from '../utils/atom';
 import Table from '@/components/table';
 
 function FormTable({ tabId }: { tabId: number }) {

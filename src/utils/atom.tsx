@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 import { atomFamily } from "jotai/utils";
-
+import Param from "./param";
 // 定义urlAtom
 export const urlAtom = atom('');
 
@@ -10,7 +10,7 @@ export const urlAtomFamily = atomFamily((id:number) => {
 
 // 定义paramAtomFamily
 export const paramAtomFamily = atomFamily((id:number) => {
-    return atom([
+    return atom<Param[]>([
         { key: '', value: '', include: true }
     ]);
 });
@@ -26,7 +26,7 @@ export const paramAtomFamily = atomFamily((id:number) => {
 // ]);
 
 export const headerAtomFamily = atomFamily((id:number) => {
-    return atom([
+    return atom<Param[]>([
         { key: 'User-Agent', value: 'Mozilla/5.0', include: true },
         { key: 'Accept', value: '*/*', include: true },
         { key: 'Accept-Encoding', value: 'deflate', include: false },
@@ -70,7 +70,7 @@ export const headerMapAtomFamily = atomFamily((id:number) => {
 // ]);
 
 export const formDataAtomFamily = atomFamily((id:number) => {
-    return atom([
+    return atom<Param[]>([
         { key: '', value: '', include: true }
     ]);
 });

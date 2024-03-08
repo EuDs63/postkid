@@ -2,7 +2,7 @@
 
 import React from 'react';
 import FormTable from './formTable';
-import { bodyTypeAtomFamily } from './atom';
+import { bodyTypeAtomFamily } from '../utils/atom';
 import { useAtom } from 'jotai';
 import dynamic from 'next/dynamic';
 

@@ -2,7 +2,7 @@
 
 import { useAtom } from 'jotai';
 import React, {  } from 'react';
-import { headerAtomFamily } from './atom';
+import { headerAtomFamily } from '../utils/atom';
 import Table from '@/components/table';
 
 function HeaderTable({ tabId }: { tabId: number }) {

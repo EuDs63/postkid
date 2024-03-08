@@ -1,12 +1,8 @@
 'use client'
 
-interface Param {
-    key: string;
-    value: string;
-    include: boolean;
-}
+import Param from "@/utils/param";
 
-export default function Table({params,setParams}:{params: { key: string; value: string; include: boolean; }[],setParams: (arg0: { key: string; value: string; include: boolean; }[]) => void}) {
+export default function Table({params,setParams}:{params: Param[],setParams: (arg0: Param[]) => void}) {
     // 处理key变化事件
     const handleKeyChange = (index: number, value: string) => {
         const newParams = [...params];

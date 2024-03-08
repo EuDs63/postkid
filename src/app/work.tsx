@@ -4,7 +4,7 @@ import OptionPanel from "./optionPanel";
 import { useEffect, useRef, useState } from "react";
 import { invoke } from "@tauri-apps/api";
 import { useAtom, useAtomValue } from 'jotai'
-import { bodyAtomFamily, bodyTypeAtomFamily, headerMapAtomFamily, urlAtomFamily } from "./atom";
+import { bodyAtomFamily, bodyTypeAtomFamily, headerMapAtomFamily, urlAtomFamily } from "../utils/atom";
 import '../../public/prism.css';
 import Prism from "../../public/prism";
 

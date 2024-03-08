@@ -3,6 +3,7 @@ import React, { useCallback, useState } from 'react';
 import ParamTable from './ParamTable';
 import HeaderTable from './HeaderTable';
 import BodyPanel from './bodyPanel';
+import Param from '@/utils/param';
 
 function OptionItem({ tabName, selectedTab, onClick }: { tabName: string, selectedTab: string, onClick: (tabName: string) => void }) {
     return (
@@ -66,7 +67,7 @@ function OptionPanel({ tabId }: { tabId: number }) {
     }, []);
 
     // 由数组拼接参数得到url
-    const buildUrl = useCallback((url: string,params: { key: string, value: string, include: boolean }[]) => {
+    const buildUrl = useCallback((url: string,params: Param[]) => {
         // 获取url中的路径,但不使用 URL 对象，因为 URL 对象会自动解码参数
         const path = url.split('?')[0];
 

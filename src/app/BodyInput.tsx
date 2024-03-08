@@ -1,7 +1,7 @@
 'use client'
 
 import { useAtom } from 'jotai';
-import { bodyAtomFamily } from './atom';
+import { bodyAtomFamily } from '../utils/atom';
 import Editor from 'react-simple-code-editor'
 import '../../public/prism.css';
 import Prism from '../../public/prism.js';

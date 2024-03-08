@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai'
-import { countAtom, anotherCountAtom, counterAtomFamily, tabCounterAtomFamily } from './atom'
+import { countAtom, anotherCountAtom, counterAtomFamily, tabCounterAtomFamily } from '../utils/atom'
 
 
 export default function Counter({ tabId }: { tabId: number }) {

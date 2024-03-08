@@ -2,11 +2,12 @@
 
 import { useAtom } from 'jotai';
 import React, { useEffect } from 'react';
-import { paramAtomFamily, urlAtomFamily } from './atom';
+import { paramAtomFamily, urlAtomFamily } from '../utils/atom';
 import Table from '@/components/table';
 import { unionBy } from 'lodash';
+import Param from '@/utils/param';
 
-function ParamTable({ tabId, parseUrl,buildUrl }: { tabId: number,parseUrl: (url: string) => { key: string, value: string, include: boolean }[],buildUrl: (url: string,params: { key: string, value: string, include: boolean }[]) => string }) {
+function ParamTable({ tabId, parseUrl,buildUrl }: { tabId: number,parseUrl: (url: string) => Param[],buildUrl: (url: string,params: Param[]) => string }) {
     const [params, setParams] = useAtom(paramAtomFamily(tabId));
 
     const [url,setUrl] = useAtom(urlAtomFamily(tabId));
