@@ -3,7 +3,7 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic'
 
 //import Counter from './counter';
-const DynamicWork = dynamic(() => import('./work'), { ssr: false });
+const DynamicWork = dynamic(() => import('../components/work'), { ssr: false });
 //import Work from './work';
 
 function App() {
