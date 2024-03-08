@@ -40,7 +40,7 @@ export default function Table({params,setParams}:{params: Param[],setParams: (ar
                 </thead>
                 <tbody>
                     {params.map((item, index) => (
-                        <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : ''}>
+                        <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200'}>
                             <td className="px-4 py-2">
                                 <input
                                     type="checkbox"
