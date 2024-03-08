@@ -161,13 +161,13 @@ export default function Work({ tabId = 0 }: { tabId?: number }) {
 
         <div className="p-4 rounded-md shadow-md w-full h-full">
           <div className="flex flex-row items-center">
-            <div>
+            <label>
               <select className="border border-gray-300 p-2 rounded-md mr-4" value={method} onChange={handleMethodChange}>
                 <option className="text-emerald-400" value="GET">GET</option>
                 <option className="text-red-400" value="POST">POST</option>
                 {/* 添加其他 HTTP 请求方法的选项 */}
               </select>
-            </div>
+            </label>
 
           {/* <input type="text" className="border border-gray-300 p-2 rounded-md mr-4 w-3/4 break-all" 
                  placeholder="Enter URL" value={url} onChange={handleUrlChange} onClick={handleUrlClick}/> */}
