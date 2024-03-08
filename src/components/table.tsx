@@ -1,6 +1,6 @@
 'use client'
 
-import Param from "@/utils/interface";
+import { Param } from "@/utils/interface";
 
 export default function Table({params,setParams}:{params: Param[],setParams: (arg0: Param[]) => void}) {
     // 处理key变化事件
