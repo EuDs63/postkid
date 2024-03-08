@@ -9,7 +9,7 @@ export default function Response ({ response }: { response: ResponseBean }){
 
     useEffect(() => {
         if (response.success && codeElementRef.current) {
-            console.log("the ref element is", codeElementRef.current);
+            //console.log("the ref element is", codeElementRef.current);
             try {
                 Prism.highlightElement(codeElementRef.current);
             } catch (error) {
