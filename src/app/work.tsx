@@ -127,7 +127,7 @@ export default function Work({ tabId = 0 }: { tabId?: number }) {
 
   // 处理请求事件
   const handleRequest = () => {
-    console.log("send request, method:", method, "url:", url, "headerMap:", headerMap, "bodyType:", bodyType, "body:", body);
+    //console.log("send request, method:", method, "url:", url, "headerMap:", headerMap, "bodyType:", bodyType, "body:", body);
     // 清空response
     setResponse({init:false,waiting:true,success: false, data: '', error: ''});
 
@@ -177,7 +177,7 @@ export default function Work({ tabId = 0 }: { tabId?: number }) {
             rows={1}
             onChange={handleUrlChange}
             onClick={handleFocus}
-            placeholder="Enter text..."
+            placeholder="Enter url..."
           />
             <button className="bg-blue-500 text-white p-2 rounded-md" onClick={handleRequest}>Send</button>
           </div>
