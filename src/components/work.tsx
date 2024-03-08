@@ -33,11 +33,12 @@ export default function Work({ tabId = 0 }: { tabId?: number }) {
   const urlAreaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    if (url) {
+    if (url!='') {
       setUrl(url); // 更新 urlAtom 的值，触发 urlArrayAtom 重新计算
+      // 调整大小
       const urlArea = urlAreaRef.current;
-      urlArea.style.height = 'auto';
-      urlArea.style.height = `${urlArea.scrollHeight}px`
+      //urlArea.style.height = 'auto';
+      // urlArea.style.height = `${urlArea.scrollHeight}px`
     }
   }, [url, setUrl]); // 确保 setUrl 在依赖中
 
@@ -85,14 +86,11 @@ export default function Work({ tabId = 0 }: { tabId?: number }) {
   }
   const handleClick = () => {
     const urlArea = urlAreaRef.current;
-    urlArea.style.height = 'auto';
     urlArea.style.height = `${urlArea.scrollHeight}px`
-
   } 
   const handleBlur = () => {
     const urlArea = urlAreaRef.current;
     urlArea.style.height = 'auto';
-    //urlArea.style.whiteSpace= 'nowrap';
   };
 
   return (
@@ -109,7 +107,7 @@ export default function Work({ tabId = 0 }: { tabId?: number }) {
             </label>
 
           <textarea
-            className="p-2 rounded-md mr-2 resize-none flex-grow focus:outline focus:border-blue-500"
+            className="p-2 rounded-md mr-2 resize-none flex-grow focus:outline focus:border-blue-500 h-auto"
             ref = {urlAreaRef}
             value={url}
             rows={1}
@@ -120,6 +118,7 @@ export default function Work({ tabId = 0 }: { tabId?: number }) {
           />
           <button className="bg-blue-500 text-white p-2 rounded-md" onClick={handleRequest}>Send</button>
           </div>
+          
           <OptionPanel tabId={tabId} />
 
           <Response response={response} />
