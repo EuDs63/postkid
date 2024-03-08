@@ -31,22 +31,37 @@ function OptionPanel({ tabId }: { tabId: number }) {
         }
 
         // 获取查询字符串
+        // 不使用 URL 对象，因为 URL 对象会自动解码参数
+        // const search = new URL(url).search;
         const search = url.split('?')[1];
+
         if (!search) {
             return [{ key: '', value: '', include: false }];
         }
+        const result = [];
+
+        // 问题似乎出现在这里，我使用了URLSearchParams，其不支持提取不完整的参数
         const params = new URLSearchParams(search);
 
-        // 不使用 URL 对象，因为 URL 对象会自动解码参数
-        // const search = new URL(url).search;
-        // const params = new URLSearchParams(search);
-
-        const result = [];
         // @ts-ignore
-        for (const [key, value] of params) {
-            result.push({ key, value, include: true });
+        for (const [k, v] of params) {
+            result.push({ key:k||'', value:v||'', include: true });
         }
-        result.push({ key: '', value: '', include: false });
+
+        // 尝试修改，bug依然存在
+        // // 分割查询字符串
+        // const pairs = search.split('&');
+
+        // // 遍历查询参数对
+        // for (const pair of pairs) {
+        //     // 分割查询参数对
+        //     const [key, value] = pair.split('=');
+
+        //     // 将查询参数添加到结果数组中
+        //     result.push({ key:key || '', value: value || '', include: true });
+        // }
+
+        // result.push({ key: '', value: '', include: false });
         return result;
     }, []);
 

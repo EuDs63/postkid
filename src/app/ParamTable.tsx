@@ -20,6 +20,7 @@ function ParamTable({ tabId, parseUrl,buildUrl }: { tabId: number,parseUrl: (url
             const newParams = parseUrl(url);
             // 合并params
             const mergedParams = unionBy(newParams,oldParams,'key');
+            //mergedParams.push({ key: '', value: '', include: false });
             setParams(mergedParams);
         }
     }, [url]);
