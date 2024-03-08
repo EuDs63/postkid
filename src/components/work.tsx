@@ -4,26 +4,21 @@ import { useState } from "react";
 import { invoke } from "@tauri-apps/api";
 import { useAtom, useAtomValue } from 'jotai'
 import '../../public/prism.css';
-import { bodyAtomFamily, bodyTypeAtomFamily, headerMapAtomFamily, urlAtomFamily } from "../utils/atom";
+import { bodyAtomFamily, bodyTypeAtomFamily, headerMapAtomFamily, methodAtomFamily, urlAtomFamily } from "../utils/atom";
 import { ResponseBean } from '@/utils/interface'
 import Response from "./response";
-import UrlInput from "./UrlInput";
+import UrlInput from "./urlInput";
 import OptionPanel from "./optionPanel";
+import MethodSelect from "./methodSelect";
 
 export default function Work({ tabId = 0 }: { tabId?: number }) {
   // 定义请求方法
-  const [method, setMethod] = useState('GET');
+  const method = useAtomValue(methodAtomFamily(tabId)); 
 
   // 定义url
   const [url, setUrl] = useAtom(urlAtomFamily(tabId));
 
   const [response, setResponse] = useState<ResponseBean>({ init: true, waiting: false, success: false, data: '', error: '' })
-
-  // 处理方法变化事件
-  const handleMethodChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    // 获取用户选择的值，并更新状态
-    setMethod(event.target.value);
-  };
 
   // 获取header_map
   const headerMap = useAtomValue(headerMapAtomFamily(tabId));
@@ -73,13 +68,7 @@ export default function Work({ tabId = 0 }: { tabId?: number }) {
 
       <div className="p-4 rounded-md shadow-md w-full h-full">
         <div className="flex flex-row items-center">
-          <label>
-            <select className="border border-gray-300 p-2 rounded-md mr-4" value={method} onChange={handleMethodChange}>
-              <option className="text-emerald-400" value="GET">GET</option>
-              <option className="text-red-400" value="POST">POST</option>
-              {/* 添加其他 HTTP 请求方法的选项 */}
-            </select>
-          </label>
+          <MethodSelect tabId={tabId}/>
 
           <UrlInput url={url} setUrl={setUrl} />
 

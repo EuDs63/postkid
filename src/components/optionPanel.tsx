@@ -4,6 +4,7 @@ import ParamTable from './ParamTable';
 import HeaderTable from './HeaderTable';
 import BodyPanel from './bodyPanel';
 import { Param } from '@/utils/interface';
+import useTilg from 'tilg';
 
 function OptionItem({ tabName, selectedTab, onClick }: { tabName: string, selectedTab: string, onClick: (tabName: string) => void }) {
     return (
@@ -17,6 +18,7 @@ function OptionItem({ tabName, selectedTab, onClick }: { tabName: string, select
 }
 
 function OptionPanel({ tabId }: { tabId: number }) {
+    useTilg();
     const [selectedOption, setSelectedOption] = useState('Params');
 
     const handleTabChange = (tabName: React.SetStateAction<string>) => {

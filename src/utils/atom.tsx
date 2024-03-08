@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 import { atomFamily } from "jotai/utils";
-import { Param } from '@/utils/interface';
+import { HttpMethod, Param } from '@/utils/interface';
 // 定义urlAtom
 export const urlAtom = atom('');
 
@@ -128,4 +128,10 @@ export const counterAtomFamily = atomFamily((tabId:number) => {
 
 export const tabCounterAtomFamily = atomFamily((id:number) => {
     return atom(0); // 每个标签页都有一个计数器，初始为 0
+});
+
+
+
+export const methodAtomFamily = atomFamily((id:number) => {
+    return atom(HttpMethod.GET);
 });

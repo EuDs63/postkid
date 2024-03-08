@@ -11,3 +11,12 @@ export interface ResponseBean {
     data: string;
     error: string;
 }
+
+export enum HttpMethod {
+    GET = 'GET',
+    POST = 'POST',
+    PUT = 'PUT',
+    DELETE = 'DELETE',
+    PATCH = 'PATCH',
+    // 添加其他的 HTTP 方法...
+}
