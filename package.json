@@ -12,7 +12,7 @@
     "@tauri-apps/api": "^1.5.3",
     "jotai": "^2.6.5",
     "lodash": "^4.17.21",
-    "next": "14.2.0-canary.4",
+    "next": "14.2.10",
     "react": "^18",
     "react-dom": "^18",
     "react-simple-code-editor": "^0.13.1",
